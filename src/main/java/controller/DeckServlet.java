@@ -1,10 +1,12 @@
 package controller;
 
-import javafx.scene.Parent;
 import model.Brand;
+import model.Customer;
 import model.Deck;
 import model.Type;
+import service.BrandServiceImpl;
 import service.DeckServiceImpl;
+import service.TypeServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,11 +21,13 @@ import java.util.List;
 @WebServlet(name = "DeckServlet", urlPatterns = "/decks")
 public class DeckServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private DeckServiceImpl deckService;
+    private DeckServiceImpl deckService = new DeckServiceImpl();
+    private BrandServiceImpl brandService = new BrandServiceImpl();
+    private TypeServiceImpl typeService = new TypeServiceImpl();
 
-    public void init() {
-        deckService = new DeckServiceImpl();
-    }
+//    public void init() {
+//        deckService = new DeckServiceImpl();
+//    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
@@ -34,6 +38,12 @@ public class DeckServlet extends HttpServlet {
             action = "";
         }
         switch (action) {
+            case "showListType":
+                listTypes(request, response);
+                break;
+            case "showListBrand":
+                listBrands(request, response);
+                break;
             case "view":
                 viewDeck(request, response);
                 break;
@@ -46,11 +56,17 @@ public class DeckServlet extends HttpServlet {
             case "addNewBrand":
                 showAddNewBrand(request, response);
                 break;
-            case "edit":
-                System.out.println("edit form");
+            case "editDeck":
+                showEditDeckForm(request, response);
                 break;
-            case "delete":
-                showDeleteForm(request, response);
+            case "deleteDeck":
+                showDeleteDeckForm(request, response);
+                break;
+            case "deleteType":
+                showDeleteTypeForm(request, response);
+                break;
+            case "deleteBrand":
+                showDeleteBrandForm(request, response);
                 break;
             default:
                 listDecks(request, response);
@@ -76,11 +92,17 @@ public class DeckServlet extends HttpServlet {
             case "addNewType":
                 addNewType(request, response);
                 break;
-            case "edit":
-                System.out.println("edit");
+            case "editDeck":
+                editDeck(request, response);
                 break;
-            case "delete":
+            case "deleteDeck":
                 deleteDeck(request, response);
+                break;
+            case "deleteType":
+                deleteType(request, response);
+                break;
+            case "deleteBrand":
+                deleteBrand(request, response);
                 break;
             default:
                 listDecks(request, response);
@@ -91,7 +113,7 @@ public class DeckServlet extends HttpServlet {
     private void listDecks(HttpServletRequest request, HttpServletResponse response) {
         List<Deck> decks = deckService.findAll();
         request.setAttribute("decks", decks);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("deck/list.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("deck/listDeck.jsp");
         try {
             dispatcher.forward(request, response);
         } catch (ServletException e) {
@@ -134,11 +156,79 @@ public class DeckServlet extends HttpServlet {
         }
     }
 
-    private void showDeleteForm(HttpServletRequest request, HttpServletResponse response) {
+    private void showEditDeckForm(HttpServletRequest request, HttpServletResponse response) {
         int deckId = Integer.parseInt(request.getParameter("deckId"));
         Deck deck = deckService.selectDeck(deckId);
         request.setAttribute("deck", deck);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("deck/delete.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("deck/editDeck.jsp");
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showDeleteDeckForm(HttpServletRequest request, HttpServletResponse response) {
+        int deckId = Integer.parseInt(request.getParameter("deckId"));
+        Deck deck = deckService.selectDeck(deckId);
+        request.setAttribute("deck", deck);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("deck/deleteDeck.jsp");
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showDeleteTypeForm(HttpServletRequest request, HttpServletResponse response) {
+        String typeId = request.getParameter("typeId");
+        Type type = typeService.selectType(typeId);
+        request.setAttribute("type", type);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("deck/deleteType.jsp");
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showDeleteBrandForm(HttpServletRequest request, HttpServletResponse response) {
+        String brandId = request.getParameter("brandId");
+        Brand brand = brandService.selectBrand(brandId);
+        request.setAttribute("brand", brand);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("deck/deleteBrand.jsp");
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void listTypes(HttpServletRequest request, HttpServletResponse response) {
+        List<Type> types = typeService.findAll();
+        request.setAttribute("types", types);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("deck/listType.jsp");
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void listBrands(HttpServletRequest request, HttpServletResponse response) {
+        List<Brand> brands = brandService.findAll();
+        request.setAttribute("brands", brands);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("deck/listBrand.jsp");
         try {
             dispatcher.forward(request, response);
         } catch (ServletException e) {
@@ -152,7 +242,7 @@ public class DeckServlet extends HttpServlet {
         int deckId = Integer.parseInt(request.getParameter("deckId"));
         Deck deck = deckService.selectDeck(deckId);
         request.setAttribute("deck", deck);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("deck/view.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("deck/viewDeckInfo.jsp");
         try {
             dispatcher.forward(request, response);
         } catch (ServletException e) {
@@ -170,6 +260,19 @@ public class DeckServlet extends HttpServlet {
         String brandId = request.getParameter("brandId");
         String deckDesc = request.getParameter("deckDesc");
         String deckImage = request.getParameter("deckImage");
+        Type type = new Type(typeId);
+        Brand brand = new Brand(brandId);
+        Deck deck = new Deck(deckName, deckPrice, deckSize, deckImage, deckDesc, type, brand);
+        deckService.addNewDeck(deck);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("deck/addNewDeck.jsp");
+        request.setAttribute("message", "Add New Deck Successfully!");
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void addNewType(HttpServletRequest request, HttpServletResponse response) {
@@ -178,6 +281,15 @@ public class DeckServlet extends HttpServlet {
         String typeStatus = request.getParameter("typeStatus");
         Type type = new Type(typeId, typeName, typeStatus);
         deckService.addNewType(type);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("deck/addNewType.jsp");
+        request.setAttribute("message", "Add New Type Successfully!");
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void addNewBrand(HttpServletRequest request, HttpServletResponse response) {
@@ -186,6 +298,50 @@ public class DeckServlet extends HttpServlet {
         String brandAddress = request.getParameter("brandAddress");
         Brand brand = new Brand(brandId, brandName, brandAddress);
         deckService.addNewBrand(brand);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("deck/addNewBrand.jsp");
+        request.setAttribute("message", "Add New Brand Successfully!");
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void editDeck(HttpServletRequest request, HttpServletResponse response) {
+        int deckId = Integer.parseInt(request.getParameter("deckId"));
+        String deckName = request.getParameter("deckName");
+        double deckPrice = Double.parseDouble(request.getParameter("deckPrice"));
+        double deckSize = Double.parseDouble(request.getParameter("deckSize"));
+        String deckImage = request.getParameter("deckImage");
+        String deckDesc = request.getParameter("deckDesc");
+        String typeId = request.getParameter("typeId");
+        String brandId = request.getParameter("brandId");
+
+//        Deck deck = new Deck(deckId, deckName, deckPrice, deckSize, deckImage, deckDesc, type, brand);
+        Deck deck = deckService.selectDeck(deckId);
+        Type type = new Type(typeId, deck.getTypeId().getTypeName(), deck.getTypeId().getTypeStatus());
+        Brand brand = new Brand(brandId, deck.getBrandId().getBrandName(), deck.getBrandId().getBrandAddress());
+        deck.setDeckPrice(deckPrice);
+        deck.setDeckSize(deckSize);
+        deck.setDeckImage(deckImage);
+        deck.setDeckDescription(deckDesc);
+        deck.setTypeId(type);
+        deck.setBrandId(brand);
+        try {
+            deckService.update(deckId, deck);
+            request.setAttribute("deck ", deck);
+            request.setAttribute("message", "Deck information was updated!");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("deck/editDeck.jsp");
+            dispatcher.forward(request, response);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void deleteDeck(HttpServletRequest request, HttpServletResponse response) {
@@ -197,6 +353,26 @@ public class DeckServlet extends HttpServlet {
             e.printStackTrace();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        }
+    }
+
+    private void deleteType(HttpServletRequest request, HttpServletResponse response) {
+        String typeId = request.getParameter("typeId");
+        try {
+            typeService.delete(typeId);
+            response.sendRedirect("/decks");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteBrand(HttpServletRequest request, HttpServletResponse response) {
+        String brandId = request.getParameter("brandId");
+        try {
+            brandService.delete(brandId);
+            response.sendRedirect("/decks");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

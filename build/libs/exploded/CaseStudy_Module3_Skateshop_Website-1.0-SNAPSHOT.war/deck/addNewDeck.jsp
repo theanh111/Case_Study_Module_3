@@ -53,16 +53,16 @@
                     <th>Deck Type:</th>
                     <td>
                         <input type="text" name="typeId" id="typeId" placeholder="Type ID">
-<%--                        <input type="text" name="typeName" id="typeName" placeholder="Type Name">--%>
-<%--                        <input type="text" name="typeStatus" id="typeStatus" placeholder="Type Status">--%>
+                        <%--                        <input type="text" name="typeName" id="typeName" placeholder="Type Name">--%>
+                        <%--                        <input type="text" name="typeStatus" id="typeStatus" placeholder="Type Status">--%>
                     </td>
                 </tr>
                 <tr>
                     <th>Deck Brand:</th>
                     <td>
                         <input type="text" name="brandId" id="brandId">
-<%--                        <input type="text" name="brandName" id="brandName" placeholder="Brand Name">--%>
-<%--                        <input type="text" name="brandAddress" id="brandAddress" placeholder="Brand Address">--%>
+                        <%--                        <input type="text" name="brandName" id="brandName" placeholder="Brand Name">--%>
+                        <%--                        <input type="text" name="brandAddress" id="brandAddress" placeholder="Brand Address">--%>
                     </td>
                 </tr>
                 <tr>
@@ -72,8 +72,9 @@
                 <tr>
                     <th>Deck Image:</th>
                     <td>
-                        <input name="photo" type="file" name="deckImage" id="deckImage" accept="image/*"
-                               onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
+                        <%--                        <input name="photo" type="file" name="deckImage" id="deckImage" accept="image/*"--%>
+                        <%--                               onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">--%>
+                        <input type="text" name="deckImage" id="deckImage" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
                     </td>
                 </tr>
                 <tr>

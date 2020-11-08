@@ -8,6 +8,10 @@ public class Type {
     public Type() {
     }
 
+    public Type(String typeId) {
+        this.typeId = typeId;
+    }
+
     public Type(String typeId, String typeName, String typeStatus) {
         this.typeId = typeId;
         this.typeName = typeName;

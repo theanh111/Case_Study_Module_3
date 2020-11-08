@@ -8,6 +8,10 @@ public class Brand {
     public Brand() {
     }
 
+    public Brand(String brandId) {
+        this.brandId = brandId;
+    }
+
     public Brand(String brandId, String brandName, String brandAddress) {
         this.brandId = brandId;
         this.brandName = brandName;

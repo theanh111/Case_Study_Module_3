@@ -1,15 +1,15 @@
 <%--
   Created by IntelliJ IDEA.
   User: xxtyo
-  Date: 11/8/2020
-  Time: 12:13 PM
+  Date: 11/1/2020
+  Time: 10:54 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Add</title>
+    <title>Edit Deck</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -24,7 +24,7 @@
 </head>
 <body>
 <center>
-    <h1>Add new deck</h1>
+    <h1>Edit Deck</h1>
     <p>
         <c:if test='${requestScope["message"] != null}'>
             <span class="message">${requestScope["message"]}</span>
@@ -36,60 +36,66 @@
     <form method="post">
         <fieldset>
             <legend>Deck Information</legend>
-            <table border="1" cellpadding="5">
+            <table>
                 <tr>
-                    <th>Deck Name:</th>
-                    <td><input type="text" name="deckName" id="deckName"></td>
-                </tr>
-                <tr>
-                    <th>Deck Price:</th>
-                    <td><input type="number" step="any" name="deckPrice" id="deckPrice"></td>
-                </tr>
-                <tr>
-                    <th>Deck Size:</th>
-                    <td><input type="number" step="any" name="deckSize" id="deckSize"></td>
-                </tr>
-                <tr>
-                    <th>Deck Type:</th>
-                    <td>
-                        <input type="text" name="typeId" id="typeId" placeholder="Type ID">
-                        <%--                        <input type="text" name="typeName" id="typeName" placeholder="Type Name">--%>
-                        <%--                        <input type="text" name="typeStatus" id="typeStatus" placeholder="Type Status">--%>
+                    <th>Deck ID:</th>
+                    <td><input type="text" disabled value="${deck.getDeckId()}">
                     </td>
                 </tr>
                 <tr>
-                    <th>Deck Brand:</th>
-                    <td>
-                        <input type="text" name="brandId" id="brandId">
-                        <%--                        <input type="text" name="brandName" id="brandName" placeholder="Brand Name">--%>
-                        <%--                        <input type="text" name="brandAddress" id="brandAddress" placeholder="Brand Address">--%>
+                    <th>Deck Name:</th>
+                    <td><input type="text" name="deckName" id="deckName" value="${deck.getDeckName()}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Deck Price:</th>
+                    <td><input type="number" step="any" name="deckPrice" id="deckPrice" value="${deck.getDeckPrice()}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Deck Size:</th>
+                    <td><input type="number" step="any" name="deckSize" id="deckSize" value="${deck.getDeckSize()}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Type Id:</th>
+                    <td><input type="text" name="typeId" id="typeId" value="${deck.getTypeId().typeId}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Brand Id:</th>
+                    <td><input type="text" name="brandId" id="brandId" value="${deck.getBrandId().brandId}">
                     </td>
                 </tr>
                 <tr>
                     <th>Deck Description:</th>
-                    <td><input type="text" name="deckDesc" id="deckDesc"></td>
-                </tr>
-                <tr>
-                    <th>Deck Image:</th>
-                    <td>
-                        <%--                        <input name="photo" type="file" name="deckImage" id="deckImage" accept="image/*"--%>
-                        <%--                               onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">--%>
-                        <input type="text" name="deckImage" id="deckImage" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
+                    <td><input type="text" name="deckDesc" id="deckDesc" value="${deck.getDeckDescription()}">
                     </td>
                 </tr>
                 <tr>
-                    <td>Preview Image</td>
+                    <th>Deck Image:</th>
+                    <td><input type="text" name="deckImage" id="deckImage" value="${deck.getDeckImage()}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Preview Image:</th>
                     <td>
-                        <img src="images/preview-icon.jpg" id="output" src="" width="100" height="100">
+                        <img src="${deck.getDeckImage()}" alt="Image" width="100px" height="100px">
                     </td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td><input type="submit" value="Add Deck" class="btn btn-success"></td>
+                    <td><input type="submit" value="Update Deck" class="btn btn-success"></td>
                 </tr>
             </table>
         </fieldset>
     </form>
 </center>
 </body>
+<style>
+    body {
+        font-family: Arial;
+        font-size: larger;
+    }
+</style>
 </html>

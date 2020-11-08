@@ -29,6 +29,10 @@ To change this template use File | Settings | File Templates.
         <a href="/decks?action=addNewDeck" class="btn btn-success">Add New Deck</a>
         <a href="/decks?action=addNewType" class="btn btn-success">Add New Type</a>
         <a href="/decks?action=addNewBrand" class="btn btn-success">Add New Brand</a>
+        <br>
+        <br>
+        <a href="/decks?action=showListType" class="btn btn-success">Show List Type</a>
+        <a href="/decks?action=showListBrand" class="btn btn-success">Show List Brand</a>
     </p>
     <hr>
     <table border="1" cellpadding="10px">
@@ -54,8 +58,8 @@ To change this template use File | Settings | File Templates.
                 <td>${deck.getBrandId().brandName}</td>
                 <td>${deck.getDeckDescription()}</td>
                 <td><img src="${deck.getDeckImage()}" alt="Deck Image Preview" width="100px" height="100px"></td>
-                <th><a href="/decks?action=edit&deckId=${deck.getDeckId()}" class="btn btn-secondary">EDIT</a></th>
-                <th><a href="/decks?action=delete&deckId=${deck.getDeckId()}" class="btn btn-danger">DELETE</a></th>
+                <th><a href="/decks?action=editDeck&deckId=${deck.getDeckId()}" class="btn btn-secondary">EDIT</a></th>
+                <th><a href="/decks?action=deleteDeck&deckId=${deck.getDeckId()}" class="btn btn-danger">DELETE</a></th>
             </tr>
         </c:forEach>
     </table>

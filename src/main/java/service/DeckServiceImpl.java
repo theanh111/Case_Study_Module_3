@@ -13,12 +13,12 @@ public class DeckServiceImpl implements IDeckService {
     private String jdbcUsername = "root";
     private String jdbcPassword = "TheanHtran111@";
 
-
     private static final String SELECT_ALL_DECK_SQL = "{CALL selectAllDeckSQL()}";
     private static final String SEARCH_DECK_BY_ID = "{CALL searchDeckById(?)}";
     private static final String ADD_NEW_DECK = "{CALL addNewDeck(?,?,?,?,?,?,?,?)}";
     private static final String ADD_NEW_TYPE = "{CALL addNewType(?,?,?)}";
     private static final String ADD_NEW_BRAND = "{CALL addNewBrand(?,?,?)}";
+    private static final String UPDATE_DECK_BY_ID = "{CALL updateDeckById(?,?,?,?,?,?,?,?)}";
     private static final String DELETE_DECK_BY_ID = "{CALL deleteDeckById(?)}";
     private static final String SEARCH_BRAND_BY_ID = "{CALL searchBrandById(?)}";
     private static final String SEARCH_TYPE_BY_ID = "{CALL searchTypeById(?)}";
@@ -83,7 +83,7 @@ public class DeckServiceImpl implements IDeckService {
     }
 
     @Override
-    public void add(Deck deck) {
+    public void addNewDeck(Deck deck) {
         try (Connection connection = getConnection();
              CallableStatement callableStatement = connection.prepareCall(ADD_NEW_DECK)) {
             callableStatement.setInt(1, deck.getDeckId());
@@ -92,6 +92,8 @@ public class DeckServiceImpl implements IDeckService {
             callableStatement.setDouble(4, deck.getDeckSize());
             callableStatement.setString(5, deck.getDeckImage());
             callableStatement.setString(6, deck.getDeckDescription());
+            callableStatement.setString(7, deck.getTypeId().getTypeId());
+            callableStatement.setString(8, deck.getBrandId().getBrandId());
             callableStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -99,8 +101,19 @@ public class DeckServiceImpl implements IDeckService {
     }
 
     @Override
-    public boolean update(int id, Deck deck) throws SQLException {
-        return false;
+    public void update(int id, Deck deck) throws SQLException {
+        try (Connection connection = getConnection();
+             CallableStatement callableStatement = connection.prepareCall(UPDATE_DECK_BY_ID)) {
+            callableStatement.setInt(1, deck.getDeckId());
+            callableStatement.setString(2, deck.getDeckName());
+            callableStatement.setDouble(3, deck.getDeckPrice());
+            callableStatement.setDouble(4, deck.getDeckSize());
+            callableStatement.setString(5, deck.getDeckImage());
+            callableStatement.setString(6, deck.getDeckDescription());
+            callableStatement.setString(7, deck.getTypeId().getTypeId());
+            callableStatement.setString(8, deck.getBrandId().getBrandId());
+            callableStatement.executeUpdate();
+        }
     }
 
     @Override
@@ -108,33 +121,32 @@ public class DeckServiceImpl implements IDeckService {
         try (Connection connection = getConnection();
              CallableStatement callableStatement = connection.prepareCall(DELETE_DECK_BY_ID)) {
             callableStatement.setInt(1, deckId);
+            callableStatement.executeUpdate();
         }
     }
 
-    public Type addNewType(Type type) {
-        Connection connection = getConnection();
-        try {
-            CallableStatement callableStatement = connection.prepareCall(ADD_NEW_TYPE);
+    public void addNewType(Type type) {
+        try (Connection connection = getConnection();
+             CallableStatement callableStatement = connection.prepareCall(ADD_NEW_TYPE)) {
             callableStatement.setString(1, type.getTypeId());
             callableStatement.setString(2, type.getTypeName());
             callableStatement.setString(3, type.getTypeStatus());
+            callableStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return type;
     }
 
-    public Brand addNewBrand(Brand brand) {
-        Connection connection = getConnection();
-        try {
-            CallableStatement callableStatement = connection.prepareCall(ADD_NEW_BRAND);
+    public void addNewBrand(Brand brand) {
+        try (Connection connection = getConnection();
+             CallableStatement callableStatement = connection.prepareCall(ADD_NEW_BRAND)) {
             callableStatement.setString(1, brand.getBrandId());
             callableStatement.setString(2, brand.getBrandName());
             callableStatement.setString(3, brand.getBrandAddress());
+            callableStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return brand;
     }
 
     public Brand searchBrandById(String brandId) {
