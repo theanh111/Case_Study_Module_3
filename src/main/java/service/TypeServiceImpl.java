@@ -18,6 +18,7 @@ public class TypeServiceImpl implements ITypeService {
     private static final String ADD_NEW_TYPE = "{CALL addNewType(?,?,?)}";
     private static final String DELETE_TYPE_BY_ID = "{CALL deleteTypeById(?)}";
     private static final String SEARCH_TYPE_BY_ID = "{CALL searchTypeById(?)}";
+    private static final String SEARCH_TYPE_BY_NAME = "{CALL searchTypeByName(?)}";
     private static final String UPDATE_TYPE_BY_ID = "{CALL updateTypeById(?,?,?)}";
 
     protected Connection getConnection() {
@@ -123,5 +124,25 @@ public class TypeServiceImpl implements ITypeService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<Type> searchTypeByName(String typeName) {
+        List<Type> typesByName = new ArrayList<>();
+        Connection connection = getConnection();
+        try {
+            CallableStatement callableStatement = connection.prepareCall(SEARCH_TYPE_BY_NAME);
+            callableStatement.setString(1, typeName);
+            ResultSet rs = callableStatement.executeQuery();
+            while (rs.next()) {
+                String typeId = rs.getString("typeId");
+                String typeNameSearch = rs.getString("typeName");
+                String typeStatus = rs.getString("deckDescription");
+                typesByName.add(new Type(typeId, typeNameSearch, typeStatus));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return typesByName;
     }
 }

@@ -1,6 +1,7 @@
 package controller;
 
 import model.Brand;
+import model.Type;
 import service.BrandServiceImpl;
 
 import javax.servlet.RequestDispatcher;
@@ -16,7 +17,7 @@ import java.util.List;
 public class BrandServlet extends HttpServlet {
     private BrandServiceImpl brandService = new BrandServiceImpl();
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
@@ -37,13 +38,16 @@ public class BrandServlet extends HttpServlet {
             case "deleteBrand":
                 showDeleteBrandForm(request, response);
                 break;
+            case "searchTypeByName":
+                searchBrandByName(request, response);
+                break;
             default:
                 listBrands(request, response);
                 break;
         }
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
@@ -60,6 +64,9 @@ public class BrandServlet extends HttpServlet {
                 break;
             case "deleteBrand":
                 deleteBrand(request, response);
+                break;
+            case "searchBrandByName":
+                searchBrandByName(request, response);
                 break;
             default:
                 listBrands(request, response);
@@ -183,5 +190,13 @@ public class BrandServlet extends HttpServlet {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void searchBrandByName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String brandName = request.getParameter("searchBrandByName");
+        List<Brand> brandsByName = brandService.searchBrandByName(brandName);
+        request.setAttribute("brands", brandsByName);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("brand/listBrand.jsp");
+        dispatcher.forward(request, response);
     }
 }

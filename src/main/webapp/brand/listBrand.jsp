@@ -24,34 +24,78 @@
 </head>
 <body>
 <center>
-    <h1>Brand Detail</h1>
-    <p>
-        <a href="/decks" class="btn btn-primary">Back To Deck List</a>
-    </p>
-    <table border="1" cellpadding="10px" width="90%">
-        <tr>
-            <th>Brand ID</th>
-            <th>Brand Name</th>
-            <th>Brand Address</th>
-            <th colspan="2">Action</th>
-        </tr>
-        <c:forEach items="${brands}" var="brand">
+    <div id="main">
+        <div id="head">
+            <div class="navbar">
+                <h1>Brand</h1>
+                <a target="_blank" href="/decks">
+                    <img src="images/logo.png" height="50" width="50"/>
+                </a>
+                <a href="/decks?action=addNewDeck" class="btn btn-success">Add New Deck</a>
+                <a href="/types?action=addNewType" class="btn btn-success">Add New Type</a>
+                <a href="/brands?action=addNewBrand" class="btn btn-success">Add New Brand</a>
+                <a href="/types?action=showListType" class="btn btn-success">Show List Type</a>
+                <a href="/brands?action=showListBrand" class="btn btn-success">Show List Brand</a>
+                <form>
+                    <input type="hidden" name="action" value="searchBrandByName">
+                    <input type="text" name="searchBrandByName" id="searchBrandByName" placeholder="Brand Name...">
+                    <input type="submit" class="btn btn-success" value="Search">
+                </form>
+            </div>
+        </div>
+        <p>
+            <a href="/decks" class="btn btn-primary">Back To Deck List</a>
+        </p>
+        <table border="1" cellpadding="10px" width="95%">
             <tr>
-                <td>${brand.getBrandId()}</td>
-                <td>${brand.getBrandName()}</td>
-                <td>${brand.getBrandAddress()}</td>
-                <th><a href="/brands?action=editBrand&brandId=${brand.getBrandId()}" class="btn btn-secondary">EDIT</a></th>
-                <th><a href="/brands?action=deleteBrand&brandId=${brand.getBrandId()}" class="btn btn-danger">DELETE</a></th>
+                <th>Brand ID</th>
+                <th>Brand Name</th>
+                <th>Brand Address</th>
+                <th colspan="2">Action</th>
             </tr>
-        </c:forEach>
-    </table>
+            <c:forEach items="${brands}" var="brand">
+                <tr>
+                    <td>${brand.getBrandId()}</td>
+                    <td>${brand.getBrandName()}</td>
+                    <td>${brand.getBrandAddress()}</td>
+                    <th><a href="/brands?action=editBrand&brandId=${brand.getBrandId()}"
+                           class="btn btn-secondary">EDIT</a></th>
+                    <th><a href="/brands?action=deleteBrand&brandId=${brand.getBrandId()}"
+                           class="btn btn-danger">DELETE</a></th>
+                </tr>
+            </c:forEach>
+        </table>
+    </div>
 </center>
 </body>
 <style>
-    body {
-        font-family: Arial;
-        font-size: larger;
+    .navbar {
+        background-color: #333;
+        top: 0;
     }
 
+    .navbar a {
+        float: left;
+        display: block;
+        color: #F2F2F2;
+        text-align: center;
+        padding: 8px 10px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+    .navbar a:hover {
+        background-color: white;
+        color: #333333;
+    }
+
+    body {
+        margin: 0 auto;
+        font-family: Arial, Tahoma;
+    }
+
+    h1 {
+        color: white;
+    }
 </style>
 </html>

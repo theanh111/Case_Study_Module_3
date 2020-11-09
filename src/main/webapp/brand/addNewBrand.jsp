@@ -49,12 +49,9 @@
                     <th>Brand Address:</th>
                     <td><input type="text" name="brandAddress" id="brandAddress"></td>
                 </tr>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Add Brand" class="btn btn-success"></td>
-                </tr>
             </table>
         </fieldset>
+        <input type="submit" value="Add Brand" class="btn btn-success">
     </form>
 </center>
 </body>

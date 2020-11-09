@@ -49,12 +49,9 @@
                     <th>Type Status:</th>
                     <td><input type="text" name="typeStatus" id="typeStatus"></td>
                 </tr>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Add Type" class="btn btn-success"></td>
-                </tr>
             </table>
         </fieldset>
+        <input type="submit" value="Add Type" class="btn btn-success">
     </form>
 </center>
 </body>

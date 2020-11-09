@@ -1,5 +1,6 @@
 package service;
 
+import model.Deck;
 import model.Type;
 
 import java.util.List;
@@ -10,6 +11,9 @@ public interface ITypeService {
     Type searchTypeById(String typeId);
 
     Type selectType(String typeId);
+
+    List<Type> searchTypeByName(String typeName);
+
     void addNewType(Type type);
 
     void update(String typeId, Type type);

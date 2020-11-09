@@ -24,33 +24,78 @@
 </head>
 <body>
 <center>
-    <h1>Type Detail</h1>
-    <p>
-        <a href="/decks" class="btn btn-primary">Back To Deck List</a>
-    </p>
-    <table border="1" cellpadding="10px"  width="90%">
-        <tr>
-            <th>Type ID</th>
-            <th>Type Name</th>
-            <th>Type Status</th>
-            <th colspan="2">Action</th>
-        </tr>
-        <c:forEach items="${types}" var="type">
+    <div id="main">
+        <div id="head">
+            <div class="navbar">
+                <h1>Type</h1>
+                <a target="_blank" href="/decks">
+                    <img src="images/logo.png" height="50" width="50"/>
+                </a>
+                <a href="/decks?action=addNewDeck" class="btn btn-success">Add New Deck</a>
+                <a href="/types?action=addNewType" class="btn btn-success">Add New Type</a>
+                <a href="/brands?action=addNewBrand" class="btn btn-success">Add New Brand</a>
+                <a href="/types?action=showListType" class="btn btn-success">Show List Type</a>
+                <a href="/brands?action=showListBrand" class="btn btn-success">Show List Brand</a>
+                <form>
+                    <input type="hidden" name="action" value="searchTypeByName">
+                    <input type="text" name="searchTypeByName" id="searchTypeByName" placeholder="Type Name...">
+                    <input type="submit" class="btn btn-success" value="Search">
+                </form>
+            </div>
+        </div>
+        <h1>Type Detail</h1>
+        <p>
+            <a href="/decks" class="btn btn-primary">Back To Deck List</a>
+        </p>
+        <table border="1" cellpadding="10px" width="90%">
             <tr>
-                <td>${type.getTypeId()}</td>
-                <td>${type.getTypeName()}</td>
-                <td>${type.getTypeStatus()}</td>
-                <th><a href="/types?action=editType&typeId=${type.getTypeId()}" class="btn btn-secondary">EDIT</a></th>
-                <th><a href="/types?action=deleteType&typeId=${type.getTypeId()}" class="btn btn-danger">DELETE</a></th>
+                <th>Type ID</th>
+                <th>Type Name</th>
+                <th>Type Status</th>
+                <th colspan="2">Action</th>
             </tr>
-        </c:forEach>
-    </table>
+            <c:forEach items="${types}" var="type">
+                <tr>
+                    <td>${type.getTypeId()}</td>
+                    <td>${type.getTypeName()}</td>
+                    <td>${type.getTypeStatus()}</td>
+                    <th><a href="/types?action=editType&typeId=${type.getTypeId()}" class="btn btn-secondary">EDIT</a>
+                    </th>
+                    <th><a href="/types?action=deleteType&typeId=${type.getTypeId()}" class="btn btn-danger">DELETE</a>
+                    </th>
+                </tr>
+            </c:forEach>
+        </table>
 </center>
 </body>
 <style>
+    .navbar {
+        background-color: #333;
+        top: 0;
+    }
+
+    .navbar a {
+        float: left;
+        display: block;
+        color: #F2F2F2;
+        text-align: center;
+        padding: 8px 10px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+    .navbar a:hover {
+        background-color: white;
+        color: #333333;
+    }
+
     body {
-        font-family: Arial;
-        font-size: larger;
+        margin: 0 auto;
+        font-family: Arial, Tahoma;
+    }
+
+    h1 {
+        color: white;
     }
 </style>
 </html>

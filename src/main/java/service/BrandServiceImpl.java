@@ -17,6 +17,7 @@ public class BrandServiceImpl implements IBrandService {
     private static final String ADD_NEW_BRAND = "{CALL addNewBrand(?,?,?)}";
     private static final String DELETE_BRAND_BY_ID = "{CALL deleteBrandById(?)}";
     private static final String SEARCH_BRAND_BY_ID = "{CALL searchBrandById(?)}";
+    private static final String SEARCH_BRAND_BY_NAME = "{CALL searchBrandByName(?)}";
     private static final String UPDATE_BRAND_BY_ID = "{CALL updateBrandById(?,?,?)}";
 
     protected Connection getConnection() {
@@ -125,4 +126,23 @@ public class BrandServiceImpl implements IBrandService {
         return brand;
     }
 
+    @Override
+    public List<Brand> searchBrandByName(String brandName) {
+        List<Brand> brandsByName = new ArrayList<>();
+        Connection connection = getConnection();
+        try {
+            CallableStatement callableStatement = connection.prepareCall(SEARCH_BRAND_BY_NAME);
+            callableStatement.setString(1, brandName);
+            ResultSet rs = callableStatement.executeQuery();
+            while (rs.next()) {
+                String brandId = rs.getString("brandId");
+                String brandNameSearch = rs.getString("brandName");
+                String brandAddress = rs.getString("brandAddress");
+                brandsByName.add(new Brand(brandId, brandNameSearch, brandAddress));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return brandsByName;
+    }
 }

@@ -10,6 +10,9 @@ public interface IBrandService {
     Brand searchBrandById(String brandId);
 
     Brand selectBrand(String brandId);
+
+    List<Brand> searchBrandByName(String brandName);
+
     void addNewBrand(Brand brand);
 
     void update(String brandId, Brand brand);

@@ -1,5 +1,6 @@
 package controller;
 
+import model.Deck;
 import model.Type;
 import service.TypeServiceImpl;
 
@@ -17,7 +18,7 @@ public class TypeServlet extends HttpServlet {
 
     private TypeServiceImpl typeService = new TypeServiceImpl();
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
@@ -38,13 +39,16 @@ public class TypeServlet extends HttpServlet {
             case "deleteType":
                 showDeleteTypeForm(request, response);
                 break;
+            case "searchTypeByName":
+                searchTypeByName(request, response);
+                break;
             default:
                 listTypes(request, response);
                 break;
         }
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
@@ -61,6 +65,9 @@ public class TypeServlet extends HttpServlet {
                 break;
             case "deleteType":
                 deleteType(request, response);
+                break;
+            case "searchTypeByName":
+                searchTypeByName(request, response);
                 break;
             default:
                 listTypes(request, response);
@@ -179,5 +186,13 @@ public class TypeServlet extends HttpServlet {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void searchTypeByName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String typeName = request.getParameter("searchTypeByName");
+        List<Type> typesByName = typeService.searchTypeByName(typeName);
+        request.setAttribute("types", typesByName);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("type/listType.jsp");
+        dispatcher.forward(request, response);
     }
 }
