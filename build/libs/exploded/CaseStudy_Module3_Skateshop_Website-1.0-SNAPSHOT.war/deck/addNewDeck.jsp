@@ -39,56 +39,95 @@
             <table border="1" cellpadding="5">
                 <tr>
                     <th>Deck Name:</th>
-                    <td><input type="text" name="deckName" id="deckName"></td>
-                </tr>
-                <tr>
                     <th>Deck Price:</th>
-                    <td><input type="number" step="any" name="deckPrice" id="deckPrice"></td>
-                </tr>
-                <tr>
                     <th>Deck Size:</th>
-                    <td><input type="number" step="any" name="deckSize" id="deckSize"></td>
-                </tr>
-                <tr>
                     <th>Deck Type:</th>
-                    <td>
-                        <input type="text" name="typeId" id="typeId" placeholder="Type ID">
-                        <%--                        <input type="text" name="typeName" id="typeName" placeholder="Type Name">--%>
-                        <%--                        <input type="text" name="typeStatus" id="typeStatus" placeholder="Type Status">--%>
-                    </td>
-                </tr>
-                <tr>
                     <th>Deck Brand:</th>
-                    <td>
-                        <input type="text" name="brandId" id="brandId">
-                        <%--                        <input type="text" name="brandName" id="brandName" placeholder="Brand Name">--%>
-                        <%--                        <input type="text" name="brandAddress" id="brandAddress" placeholder="Brand Address">--%>
-                    </td>
-                </tr>
-                <tr>
                     <th>Deck Description:</th>
-                    <td><input type="text" name="deckDesc" id="deckDesc"></td>
-                </tr>
-                <tr>
                     <th>Deck Image:</th>
-                    <td>
-                        <%--                        <input name="photo" type="file" name="deckImage" id="deckImage" accept="image/*"--%>
-                        <%--                               onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">--%>
-                        <input type="text" name="deckImage" id="deckImage" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
-                    </td>
+                    <td>Preview Image</td>
                 </tr>
                 <tr>
-                    <td>Preview Image</td>
+                    <td><input type="text" name="deckName" id="deckName"></td>
+                    <td><input type="number" step="any" name="deckPrice" id="deckPrice"></td>
+                    <td>
+                        <select name="">
+                            <option value="">7.5</option>
+                            <option value="">7.75</option>
+                            <option value="">8.0</option>
+                            <option value="">8.25</option>
+                            <option value="">8.5</option>
+                            <option value="">8.75</option>
+                        </select>
+                    </td>
+
+                    <td>
+                        <select name="">
+                            <option value="">Regular</option>
+                            <option value="">Penny</option>
+                            <option value="">Cruiser</option>
+                            <option value="">Longboard</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="">
+                            <option value="">Promade</option>
+                            <option value="">LBSkateshop</option>
+                            <option value="">Primitive</option>
+                            <option value="">Baker</option>
+                            <option value="">DGK</option>
+                            <option value="">The Crime</option>
+                        </select>
+                    </td>
+                    <td><input type="text" name="deckDesc" id="deckDesc"></td>
+                    <td>
+                        <input type="text" name="deckImage" id="deckImage"
+                               oninput="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
+                    </td>
                     <td>
                         <img src="images/preview-icon.jpg" id="output" src="" width="100" height="100">
                     </td>
+
                 </tr>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Add Deck" class="btn btn-success"></td>
-                </tr>
+                <%--                <tr>--%>
+                <%--                   --%>
+                <%--                 --%>
+                <%--&lt;%&ndash;                    <td><input type="number" step="any" name="deckSize" id="deckSize"></td>&ndash;%&gt;--%>
+                <%--                </tr>--%>
+                <%--                <tr>--%>
+                <%--               --%>
+                <%--&lt;%&ndash;                    <td>&ndash;%&gt;--%>
+                <%--&lt;%&ndash;                        <input type="text" name="typeId" id="typeId" placeholder="Type ID">&ndash;%&gt;--%>
+                <%--&lt;%&ndash;                    </td>&ndash;%&gt;--%>
+                <%--                </tr>--%>
+                <%--                <tr>--%>
+                <%--                   --%>
+                <%--                --%>
+                <%--&lt;%&ndash;                    <td>&ndash;%&gt;--%>
+                <%--&lt;%&ndash;                        <input type="text" name="brandId" id="brandId">&ndash;%&gt;--%>
+                <%--&lt;%&ndash;                    </td>&ndash;%&gt;--%>
+                <%--                </tr>--%>
+                <%--                <tr>--%>
+                <%--                    --%>
+                <%--                   --%>
+                <%--                </tr>--%>
+                <%--                <tr>--%>
+
+                <%--                    <td>--%>
+                <%--                        &lt;%&ndash;                        <input name="photo" type="file" name="deckImage" id="deckImage" accept="image/*"&ndash;%&gt;--%>
+                <%--                        &lt;%&ndash;                               onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">&ndash;%&gt;--%>
+                <%--                        --%>
+                <%--                    </td>--%>
+                <%--                </tr>--%>
+                <%--                <tr>--%>
+
+<%--                <td>--%>
+<%--                --%>
+<%--                </td>--%>
+<%--                </tr>--%>
             </table>
         </fieldset>
+        <input type="submit" value="Add Deck" class="btn btn-success">
     </form>
 </center>
 </body>

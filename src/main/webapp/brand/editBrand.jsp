@@ -2,14 +2,14 @@
   Created by IntelliJ IDEA.
   User: xxtyo
   Date: 11/1/2020
-  Time: 10:55 PM
+  Time: 10:54 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>View Type</title>
+    <title>Edit Type</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -24,36 +24,47 @@
 </head>
 <body>
 <center>
-    <h1>Type Detail</h1>
+    <h1>Edit Brand</h1>
+    <p>
+        <c:if test='${requestScope["message"] != null}'>
+            <span class="message">${requestScope["message"]}</span>
+        </c:if>
+    </p>
     <p>
         <a href="/decks" class="btn btn-primary">Back To Deck List</a>
     </p>
-    <table border="1" cellpadding="10px">
-        <c:forEach items="${types}" var="type">
-            <tr>
-                <td>${type.getTypeId()}</td>
-                <td>${type.getTypeName()}</td>
-                <td>${type.getTypeStatus()}</td>
-                <th><a href="/decks?action=editType&typeId=${type.getTypeId()}" class="btn btn-secondary">EDIT</a></th>
-                <th><a href="/decks?action=deleteType&typeId=${type.getTypeId()}" class="btn btn-danger">DELETE</a></th>
-            </tr>
-        </c:forEach>
-    </table>
+    <form method="post">
+        <fieldset>
+            <legend>Brand Information</legend>
+            <table>
+                <tr>
+                    <th>Brand ID:</th>
+                    <td><input type="text" disabled value="${brand.getBrandId()}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Brand Name:</th>
+                    <td><input type="text" name="brandName" id="brandName" value="${brand.getBrandId()}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Brand Address:</th>
+                    <td><input type="text" name="brandAddress" id="brandAddress" value="${brand.getBrandAddress()}">
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="Update Brand" class="btn btn-success"></td>
+                </tr>
+            </table>
+        </fieldset>
+    </form>
 </center>
 </body>
 <style>
     body {
         font-family: Arial;
         font-size: larger;
-    }
-
-    tr td:nth-child(1) {
-        font-weight: bold;
-        font-size: large;
-    }
-
-    tr th:nth-child(1) {
-        font-size: 50px;
     }
 </style>
 </html>

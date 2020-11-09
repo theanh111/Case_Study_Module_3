@@ -15,7 +15,10 @@ public class TypeServiceImpl implements ITypeService {
 
     private static final String SELECT_ALL_TYPE_SQL = "{CALL selectAllTypeSQL()}";
     private static final String SELECT_TYPE_BY_ID = "{CALL searchTypeById(?)}";
+    private static final String ADD_NEW_TYPE = "{CALL addNewType(?,?,?)}";
     private static final String DELETE_TYPE_BY_ID = "{CALL deleteTypeById(?)}";
+    private static final String SEARCH_TYPE_BY_ID = "{CALL searchTypeById(?)}";
+    private static final String UPDATE_TYPE_BY_ID = "{CALL updateTypeById(?,?,?)}";
 
     protected Connection getConnection() {
         Connection connection = null;
@@ -67,8 +70,48 @@ public class TypeServiceImpl implements ITypeService {
     }
 
     @Override
-    public void update(String typeId, Type type) {
+    public Type searchTypeById(String typeId) {
+        Type type = null;
+        Connection connection = getConnection();
+        try {
+            CallableStatement callableStatement = connection.prepareCall(SEARCH_TYPE_BY_ID);
+            callableStatement.setString(1, typeId);
+            ResultSet rs = callableStatement.executeQuery();
+            while (rs.next()) {
+                String typeName = rs.getString("typeName");
+                String typeStatus = rs.getString("typeStatus");
+                type = new Type(typeId, typeName, typeStatus);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return type;
+    }
 
+    @Override
+    public void addNewType(Type type) {
+        try (Connection connection = getConnection();
+             CallableStatement callableStatement = connection.prepareCall(ADD_NEW_TYPE)) {
+            callableStatement.setString(1, type.getTypeId());
+            callableStatement.setString(2, type.getTypeName());
+            callableStatement.setString(3, type.getTypeStatus());
+            callableStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    @Override
+    public void update(String typeId, Type type) {
+        try (Connection connection = getConnection();
+             CallableStatement callableStatement = connection.prepareCall(UPDATE_TYPE_BY_ID)) {
+            callableStatement.setString(1, type.getTypeId());
+            callableStatement.setString(2, type.getTypeName());
+            callableStatement.setString(3, type.getTypeStatus());
+            callableStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     @Override

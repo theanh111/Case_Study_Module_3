@@ -15,4 +15,6 @@ public interface IDeckService {
     void update(int deckId, Deck deck) throws SQLException;
 
     void delete(int deckId) throws SQLException;
+
+    List<Deck> searchDeckByName(String deckName);
 }

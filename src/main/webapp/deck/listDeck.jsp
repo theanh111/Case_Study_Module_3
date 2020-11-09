@@ -27,15 +27,20 @@ To change this template use File | Settings | File Templates.
     <h1>Decks</h1>
     <p>
         <a href="/decks?action=addNewDeck" class="btn btn-success">Add New Deck</a>
-        <a href="/decks?action=addNewType" class="btn btn-success">Add New Type</a>
-        <a href="/decks?action=addNewBrand" class="btn btn-success">Add New Brand</a>
+        <a href="/types?action=addNewType" class="btn btn-success">Add New Type</a>
+        <a href="/brands?action=addNewBrand" class="btn btn-success">Add New Brand</a>
         <br>
         <br>
-        <a href="/decks?action=showListType" class="btn btn-success">Show List Type</a>
-        <a href="/decks?action=showListBrand" class="btn btn-success">Show List Brand</a>
+        <a href="/types?action=showListType" class="btn btn-success">Show List Type</a>
+        <a href="/brands?action=showListBrand" class="btn btn-success">Show List Brand</a>
     </p>
+    <form>
+        <input type="hidden" name="action" value="searchDeckByName">
+        <input type="text" name="searchDeckByName" id="searchDeckByName" placeholder="Deck Name...">
+        <input type="submit" class="btn btn-success" value="Search">
+    </form>
     <hr>
-    <table border="1" cellpadding="10px">
+    <table border="1" cellpadding="10px" width="90%">
         <tr>
             <th>Deck ID</th>
             <th>Deck Name</th>

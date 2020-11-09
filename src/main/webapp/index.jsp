@@ -26,14 +26,14 @@ To change this template use File | Settings | File Templates.
 <center>
     <h1>Welcome to Skateshop - Web Application</h1>
     <form action="/decks">
-        <input type="submit" value="Let's start!">
+        <input type="submit" value="Admin Page">
     </form>
 </center>
 <div id="main">
     <div id="head">
         <div class="navbar">
             <a target="_blank" href="https://github.com/theanh111">
-                <img src="../main/webapp/images/logo.jpg" height="30" width="50"/>
+                <img src="images/logo.JPG" height="30" width="50"/>
             </a>
             <a target="_blank" href="https://github.com/theanh111">Home</a>
             <a target="_blank" href="https://github.com/theanh111">Skateboard</a>
@@ -47,47 +47,46 @@ To change this template use File | Settings | File Templates.
         </div>
     </div>
 
-    <div id="head-link">
-        <span>This is Head-link</span>
-    </div>
-    <div id="s-body">
-        <div id="left">
-            <span>This is Leftside</span>
-        </div>
-        <div id="content">
-            <h1>Ok test</h1>
-        </div>
-        <div id="right">
-            <span>This is Rightside</span>
-        </div>
-    </div>
+<%--    <div id="head-link">--%>
+<%--        <span>This is Head-link</span>--%>
+<%--    </div>--%>
+<%--    <div id="s-body">--%>
+<%--        <div id="left">--%>
+<%--            <span>This is Leftside</span>--%>
+<%--        </div>--%>
+<%--        <div id="content">--%>
+<%--            <h1>Ok test</h1>--%>
+<%--        </div>--%>
+<%--        <div id="right">--%>
+<%--            <span>This is Rightside</span>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
-    <div id="footer">
-        <span>This is Footer</span>
-    </div>
+    <%--    <div id="footer">--%>
+    <%--        <span>This is Footer</span>--%>
+    <%--    </div>--%>
 </div>
 </body>
 <style>
-
     .navbar {
         background-color: #333;
         top: 0;
     }
 
-    /*.navbar a {*/
-    /*    float: left;*/
-    /*    display: block;*/
-    /*    color: #F2F2F2;*/
-    /*    text-align: center;*/
-    /*    padding: 14px 16px;*/
-    /*    text-decoration: none;*/
-    /*    font-size: 17px;*/
-    /*}*/
+    .navbar a {
+        float: left;
+        display: block;
+        color: #F2F2F2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+    }
 
-    /*.navbar a:hover {*/
-    /*    background-color: white;*/
-    /*    color: #333333;*/
-    /*}*/
+    .navbar a:hover {
+        background-color: white;
+        color: #333333;
+    }
 
     body {
         margin: 0 auto;
@@ -117,8 +116,8 @@ To change this template use File | Settings | File Templates.
 
         #head {
             height: 100px;
-            background-color: #F5F5F5;
-            border: 1px solid #CDCDCD;
+            /*background-color: #F5F5F5;*/
+            /*border: 1px solid #CDCDCD;*/
         }
 
         #head-link {

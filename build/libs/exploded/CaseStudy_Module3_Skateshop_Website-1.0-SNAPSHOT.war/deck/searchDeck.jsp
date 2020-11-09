@@ -1,15 +1,15 @@
 <%--
   Created by IntelliJ IDEA.
   User: xxtyo
-  Date: 11/1/2020
-  Time: 10:55 PM
+  Date: 11/4/2020
+  Time: 5:23 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>View Brand</title>
+    <title>Search</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -24,36 +24,38 @@
 </head>
 <body>
 <center>
-    <h1>Brand Detail</h1>
+    <h1>Searched</h1>
     <p>
         <a href="/decks" class="btn btn-primary">Back To Deck List</a>
     </p>
-    <table border="1" cellpadding="10px">
-        <c:forEach items="${brands}" var="brand">
+    <table border="1" cellpadding="10px" width="90%">
+        <tr>
+            <th>Deck ID</th>
+            <th>Deck Name</th>
+            <th>Deck Price</th>
+            <th>Deck Size</th>
+            <th>Type Id</th>
+            <th>Brand Id</th>
+            <th>Deck Description</th>
+            <th>Deck Image</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        <c:forEach items="${decks}" var="deck">
             <tr>
-                <td>${brand.getBrandId()}</td>
-                <td>${brand.getBrandName()}</td>
-                <td>${brand.getBrandAddress()}</td>
-                <th><a href="/decks?action=editBrand&brandId=${brand.getBrandId()}" class="btn btn-secondary">EDIT</a></th>
-                <th><a href="/decks?action=deleteBrand&brandId=${brand.getBrandId()}" class="btn btn-danger">DELETE</a></th>
+                <td>${deck.getDeckId()}</td>
+                <td><a href="/decks?action=view&deckId=${deck.getDeckId()}">${deck.getDeckName()}</a></td>
+                <td>${deck.getDeckPrice()}</td>
+                <td>${deck.getDeckSize()}</td>
+                <td>${deck.getTypeId().typeName}</td>
+                <td>${deck.getBrandId().brandName}</td>
+                <td>${deck.getDeckDescription()}</td>
+                <td><img src="${deck.getDeckImage()}" alt="Deck Image Preview" width="100px" height="100px"></td>
+                <th><a href="/decks?action=editDeck&deckId=${deck.getDeckId()}" class="btn btn-secondary">EDIT</a></th>
+                <th><a href="/decks?action=deleteDeck&deckId=${deck.getDeckId()}" class="btn btn-danger">DELETE</a></th>
             </tr>
         </c:forEach>
     </table>
 </center>
 </body>
-<style>
-    body {
-        font-family: Arial;
-        font-size: larger;
-    }
-
-    tr td:nth-child(1) {
-        font-weight: bold;
-        font-size: large;
-    }
-
-    tr th:nth-child(1) {
-        font-size: 50px;
-    }
-</style>
 </html>

@@ -14,8 +14,10 @@ public class BrandServiceImpl implements IBrandService {
 
     private static final String SELECT_ALL_BRAND_SQL = "{CALL selectAllBrandSQL()}";
     private static final String SELECT_BRAND_BY_ID = "{CALL searchBrandById(?)}";
+    private static final String ADD_NEW_BRAND = "{CALL addNewBrand(?,?,?)}";
     private static final String DELETE_BRAND_BY_ID = "{CALL deleteBrandById(?)}";
-
+    private static final String SEARCH_BRAND_BY_ID = "{CALL searchBrandById(?)}";
+    private static final String UPDATE_BRAND_BY_ID = "{CALL updateBrandById(?,?,?)}";
 
     protected Connection getConnection() {
         Connection connection = null;
@@ -68,8 +70,29 @@ public class BrandServiceImpl implements IBrandService {
     }
 
     @Override
-    public void update(String brandId, Brand brand) {
+    public void addNewBrand(Brand brand) {
+        try (Connection connection = getConnection();
+             CallableStatement callableStatement = connection.prepareCall(ADD_NEW_BRAND)) {
+            callableStatement.setString(1, brand.getBrandId());
+            callableStatement.setString(2, brand.getBrandName());
+            callableStatement.setString(3, brand.getBrandAddress());
+            callableStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 
+    @Override
+    public void update(String brandId, Brand brand) {
+        try (Connection connection = getConnection();
+             CallableStatement callableStatement = connection.prepareCall(UPDATE_BRAND_BY_ID)) {
+            callableStatement.setString(1, brand.getBrandId());
+            callableStatement.setString(2, brand.getBrandName());
+            callableStatement.setString(3, brand.getBrandAddress());
+            callableStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     @Override
@@ -82,4 +105,24 @@ public class BrandServiceImpl implements IBrandService {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public Brand searchBrandById(String brandId) {
+        Brand brand = null;
+        Connection connection = getConnection();
+        try {
+            CallableStatement callableStatement = connection.prepareCall(SEARCH_BRAND_BY_ID);
+            callableStatement.setString(1, brandId);
+            ResultSet rs = callableStatement.executeQuery();
+            while (rs.next()) {
+                String brandName = rs.getString("brandName");
+                String brandAddress = rs.getString("brandAddress");
+                brand = new Brand(brandId, brandName, brandAddress);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return brand;
+    }
+
 }

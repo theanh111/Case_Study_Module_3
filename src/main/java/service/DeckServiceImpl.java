@@ -1,6 +1,7 @@
 package service;
 
 import model.Brand;
+import model.Customer;
 import model.Deck;
 import model.Type;
 
@@ -9,19 +10,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DeckServiceImpl implements IDeckService {
+    BrandServiceImpl brandService = new BrandServiceImpl();
+    TypeServiceImpl typeService = new TypeServiceImpl();
+
     private String jdbcURL = "jdbc:mysql://localhost:3306/skateshop?useSSL=false";
     private String jdbcUsername = "root";
     private String jdbcPassword = "TheanHtran111@";
 
     private static final String SELECT_ALL_DECK_SQL = "{CALL selectAllDeckSQL()}";
     private static final String SEARCH_DECK_BY_ID = "{CALL searchDeckById(?)}";
+    private static final String SEARCH_DECK_BY_NAME = "{CALL searchDeckByName(?)}";
     private static final String ADD_NEW_DECK = "{CALL addNewDeck(?,?,?,?,?,?,?,?)}";
-    private static final String ADD_NEW_TYPE = "{CALL addNewType(?,?,?)}";
-    private static final String ADD_NEW_BRAND = "{CALL addNewBrand(?,?,?)}";
     private static final String UPDATE_DECK_BY_ID = "{CALL updateDeckById(?,?,?,?,?,?,?,?)}";
     private static final String DELETE_DECK_BY_ID = "{CALL deleteDeckById(?)}";
-    private static final String SEARCH_BRAND_BY_ID = "{CALL searchBrandById(?)}";
-    private static final String SEARCH_TYPE_BY_ID = "{CALL searchTypeById(?)}";
 
     protected Connection getConnection() {
         Connection connection = null;
@@ -37,6 +38,31 @@ public class DeckServiceImpl implements IDeckService {
     }
 
     @Override
+    public List<Deck> searchDeckByName(String deckName) {
+        List<Deck> decksByName = new ArrayList<>();
+        Connection connection = getConnection();
+        try {
+            CallableStatement callableStatement = connection.prepareCall(SEARCH_DECK_BY_NAME);
+            callableStatement.setString(1, deckName);
+            ResultSet rs = callableStatement.executeQuery();
+            while (rs.next()) {
+                int deckId = rs.getInt("deckId");
+                String deckNameSearched = rs.getString("deckName");
+                double deckPrice = rs.getDouble("deckPrice");
+                double deckSize = rs.getDouble("deckSize");
+                String deckImage = rs.getString("deckImage");
+                String deckDesc = rs.getString("deckDescription");
+                Type typeId = typeService.searchTypeById(rs.getString("typeId"));
+                Brand brandId = brandService.searchBrandById(rs.getString("brandId"));
+                decksByName.add(new Deck(deckId, deckNameSearched, deckPrice, deckSize, deckImage, deckDesc, typeId, brandId));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return decksByName;
+    }
+
+    @Override
     public List<Deck> findAll() {
         List<Deck> decks = new ArrayList<>();
         try (Connection connection = getConnection();
@@ -49,8 +75,8 @@ public class DeckServiceImpl implements IDeckService {
                 double deckSize = rs.getDouble("deckSize");
                 String deckImage = rs.getString("deckImage");
                 String deckDesc = rs.getString("deckDescription");
-                Type typeId = searchTypeById(rs.getString("typeId"));
-                Brand brandId = searchBrandById(rs.getString("brandId"));
+                Type typeId = typeService.searchTypeById(rs.getString("typeId"));
+                Brand brandId = brandService.searchBrandById(rs.getString("brandId"));
                 decks.add(new Deck(deckId, deckName, deckPrice, deckSize, deckImage, deckDesc, typeId, brandId));
             }
         } catch (SQLException throwables) {
@@ -72,8 +98,8 @@ public class DeckServiceImpl implements IDeckService {
                 double deckSize = rs.getDouble("deckSize");
                 String deckImage = rs.getString("deckImage");
                 String deckDesc = rs.getString("deckDescription");
-                Type typeId = searchTypeById(rs.getString("typeId"));
-                Brand brandId = searchBrandById(rs.getString("brandId"));
+                Type typeId = typeService.searchTypeById(rs.getString("typeId"));
+                Brand brandId = brandService.searchBrandById(rs.getString("brandId"));
                 deck = new Deck(deckId, deckName, deckPrice, deckSize, deckImage, deckDesc, typeId, brandId);
             }
         } catch (SQLException throwables) {
@@ -123,65 +149,5 @@ public class DeckServiceImpl implements IDeckService {
             callableStatement.setInt(1, deckId);
             callableStatement.executeUpdate();
         }
-    }
-
-    public void addNewType(Type type) {
-        try (Connection connection = getConnection();
-             CallableStatement callableStatement = connection.prepareCall(ADD_NEW_TYPE)) {
-            callableStatement.setString(1, type.getTypeId());
-            callableStatement.setString(2, type.getTypeName());
-            callableStatement.setString(3, type.getTypeStatus());
-            callableStatement.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
-    public void addNewBrand(Brand brand) {
-        try (Connection connection = getConnection();
-             CallableStatement callableStatement = connection.prepareCall(ADD_NEW_BRAND)) {
-            callableStatement.setString(1, brand.getBrandId());
-            callableStatement.setString(2, brand.getBrandName());
-            callableStatement.setString(3, brand.getBrandAddress());
-            callableStatement.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
-    public Brand searchBrandById(String brandId) {
-        Brand brand = null;
-        Connection connection = getConnection();
-        try {
-            CallableStatement callableStatement = connection.prepareCall(SEARCH_BRAND_BY_ID);
-            callableStatement.setString(1, brandId);
-            ResultSet rs = callableStatement.executeQuery();
-            while (rs.next()) {
-                String brandName = rs.getString("brandName");
-                String brandAddress = rs.getString("brandAddress");
-                brand = new Brand(brandId, brandName, brandAddress);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return brand;
-    }
-
-    public Type searchTypeById(String typeId) {
-        Type type = null;
-        Connection connection = getConnection();
-        try {
-            CallableStatement callableStatement = connection.prepareCall(SEARCH_TYPE_BY_ID);
-            callableStatement.setString(1, typeId);
-            ResultSet rs = callableStatement.executeQuery();
-            while (rs.next()) {
-                String typeName = rs.getString("typeName");
-                String typeStatus = rs.getString("typeStatus");
-                type = new Type(typeId, typeName, typeStatus);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return type;
     }
 }
