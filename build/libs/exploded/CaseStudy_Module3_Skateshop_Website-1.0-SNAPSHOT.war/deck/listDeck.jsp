@@ -1,15 +1,8 @@
-<%--
-Created by IntelliJ IDEA.
-User: xxtyo
-Date: 11/1/2020
-Time: 10:54 PM
-To change this template use File | Settings | File Templates.
---%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;c   harset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Customer List</title>
+    <title>Deck Management</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -24,14 +17,117 @@ To change this template use File | Settings | File Templates.
 </head>
 <body>
 <center>
+    <div class="container" id="content">
+        <div class="col-md-6 col-lg-4">
+            <div class="modal fade" id="exampleModalAdd" tabindex="-1"
+                 role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="container">
+                                <form action="/decks?action=addNewDeck" method="post">
+                                    <h1 style="color: black;">Adding A New Deck</h1>
+                                    <hr>
+                                    <p>Deck Information</p>
+                                    <table>
+                                        <tr>
+                                            <th>Deck Name:</th>
+                                            <td>
+                                                <input type="text" name="deckName" id="deckName">
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Deck Price:</th>
+                                            <td>
+                                                <input type="number" step="any" name="deckPrice" id="deckPrice">
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Deck Size:</th>
+                                            <td>
+                                                <select name="deckSize">
+                                                    <option value="7.5">7.5</option>
+                                                    <option value="7.75">7.75</option>
+                                                    <option value="8.0">8.0</option>
+                                                    <option value="8.25">8.25</option>
+                                                    <option value="8.5">8.5</option>
+                                                    <option value="8.75">8.75</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Deck Type:</th>
+                                            <td>
+                                                <select name="deckType">
+                                                    <c:forEach items="${types}" var="type">
+                                                        <option value="${type.getTypeId()}">${type.getTypeName()}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Deck Brand:</th>
+                                            <td>
+                                                <select name="deckBrand">
+                                                    <c:forEach items="${brands}" var="brand">
+                                                        <option value="${brand.getBrandId()}">${brand.getBrandName()}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Deck Description:</th>
+                                            <td><input type="text" name="deckDesc" id="deckDesc"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Deck Image:</th>
+                                            <td>
+                                                <input type="text" name="deckImage" id="deckImage"
+                                                       oninput="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Preview Image</th>
+                                            <td>
+                                                <img src="images/preview-icon.jpg" id="output" src="" width="100"
+                                                     height="100">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <input type="submit" value="Add Deck" class="btn btn-success">
+                                </form>
+                                <div class="modal-footer">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-danger"
+                                    data-dismiss="modal">CLOSE
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="main">
         <div id="head">
             <div class="navbar">
-                <h1>Deck</h1>
-                <a target="_blank" href="/decks">
+                <h1>Decks List</h1>
+                <a href="/home">
                     <img src="images/logo.png" height="50" width="50"/>
                 </a>
-                <a href="/decks?action=addNewDeck" class="btn btn-success">Add New Deck</a>
+                <a class="btn btn-success" data-toggle="modal"
+                   data-target="#exampleModalAdd">Add New Deck
+                </a>
+
                 <a href="/types?action=addNewType" class="btn btn-success">Add New Type</a>
                 <a href="/brands?action=addNewBrand" class="btn btn-success">Add New Brand</a>
                 <a href="/types?action=showListType" class="btn btn-success">Show List Type</a>
@@ -45,7 +141,7 @@ To change this template use File | Settings | File Templates.
         </div>
         <hr>
         <div class="container">
-            <table class="table" border="1">
+            <table class="table" id="customers">
                 <thead>
                 <tr>
                     <th scope="col">ID</th>
@@ -71,7 +167,8 @@ To change this template use File | Settings | File Templates.
                         <td>${deck.getBrandId().brandName}</td>
                         <td>${deck.getDeckDescription()}</td>
                         <td><img src="${deck.getDeckImage()}" alt="Deck Image Preview" width="50px" height="50px"></td>
-                        <th><a href="/decks?action=editDeck&deckId=${deck.getDeckId()}"
+                        <th>
+                            <a href="/decks?action=editDeck&deckId=${deck.getDeckId()}"
                                class="btn btn-secondary">EDIT</a>
                         </th>
                         <th><a href="/decks?action=deleteDeck&deckId=${deck.getDeckId()}"
@@ -112,6 +209,33 @@ To change this template use File | Settings | File Templates.
     }
 
     h1 {
+        color: white;
+    }
+
+    #customers {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    #customers td, #customers th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #customers tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #customers tr:hover {
+        background-color: #ddd;
+    }
+
+    #customers th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #4CAF50;
         color: white;
     }
 </style>

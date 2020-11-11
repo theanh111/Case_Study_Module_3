@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "DeckServlet", urlPatterns = "/decks")
@@ -24,9 +25,6 @@ public class DeckServlet extends HttpServlet {
     private DeckServiceImpl deckService = new DeckServiceImpl();
     private TypeServiceImpl typeService = new TypeServiceImpl();
     private BrandServiceImpl brandService = new BrandServiceImpl();
-
-    private TypeServlet typeServlet = new TypeServlet();
-    private BrandServlet brandServlet = new BrandServlet();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
@@ -39,11 +37,6 @@ public class DeckServlet extends HttpServlet {
         switch (action) {
             case "view":
                 viewDeck(request, response);
-                break;
-            case "addNewDeck":
-                brandServlet.doGet(request, response);
-                typeServlet.doGet(request, response);
-                showAddNewDeck(request, response);
                 break;
             case "editDeck":
                 showEditDeckForm(request, response);
@@ -88,20 +81,13 @@ public class DeckServlet extends HttpServlet {
     }
 
     private void listDecks(HttpServletRequest request, HttpServletResponse response) {
+        List<Type> typeList = typeService.findAll();
+        List<Brand> brandList = brandService.findAll();
         List<Deck> decks = deckService.findAll();
+        request.setAttribute("types", typeList);
+        request.setAttribute("brands", brandList);
         request.setAttribute("decks", decks);
         RequestDispatcher dispatcher = request.getRequestDispatcher("deck/listDeck.jsp");
-        try {
-            dispatcher.forward(request, response);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void showAddNewDeck(HttpServletRequest request, HttpServletResponse response) {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("deck/addNewDeck.jsp");
         try {
             dispatcher.forward(request, response);
         } catch (ServletException e) {
@@ -153,6 +139,21 @@ public class DeckServlet extends HttpServlet {
         }
     }
 
+//    private void showTypeList(HttpServletRequest request, HttpServletResponse response) {
+//        List<Type> typeList = typeService.findAll();
+//        List<Brand> brandList = brandService.findAll();
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("deck/listDeck.jsp");
+//        request.setAttribute("types", typeList);
+//        request.setAttribute("brands", brandList);
+//        try {
+//            dispatcher.forward(request, response);
+//        } catch (ServletException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
     private void addNewDeck(HttpServletRequest request, HttpServletResponse response) {
         String deckName = request.getParameter("deckName");
         double deckPrice = Double.parseDouble(request.getParameter("deckPrice"));
@@ -165,12 +166,12 @@ public class DeckServlet extends HttpServlet {
         Brand brand = new Brand(brandId);
         Deck deck = new Deck(deckName, deckPrice, deckSize, deckImage, deckDesc, type, brand);
         deckService.addNewDeck(deck);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("deck/addNewDeck.jsp");
-        request.setAttribute("message", "Add New Deck Successfully!");
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("deck/listDeck.jsp");
+
         try {
-            dispatcher.forward(request, response);
-        } catch (ServletException e) {
-            e.printStackTrace();
+//            dispatcher.forward(request, response);
+            response.sendRedirect("/decks");
+            request.setAttribute("message", "Add New Deck Successfully!");
         } catch (IOException e) {
             e.printStackTrace();
         }

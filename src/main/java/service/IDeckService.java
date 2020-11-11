@@ -17,4 +17,12 @@ public interface IDeckService {
     void delete(int deckId) throws SQLException;
 
     List<Deck> searchDeckByName(String deckName);
+
+    List<Deck> sortSizeFromLowToHigh();
+
+    List<Deck> sortSizeFromHighToLow();
+
+    List<Deck> sortPriceFromLowToHigh();
+
+    List<Deck> sortPriceFromHighToLow();
 }

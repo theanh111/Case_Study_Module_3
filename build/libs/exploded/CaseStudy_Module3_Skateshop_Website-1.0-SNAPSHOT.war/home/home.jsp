@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: xxtyo
-  Date: 11/9/2020
-  Time: 2:19 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -23,115 +16,145 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<div id="main">
-    <div id="head">
-        <div class="navbar">
-            <div>
-                <h1>SKATESHOP</h1>
-            </div>
-            <div class="">
-                <a href="/home">
-                    <img src="images/logo.png" height="50" width="50"/>
-                </a>
-            </div>
-            <div>
-                <form>
-                    <input type="hidden" name="action" value="searchDeckByName">
-                    <input type="text" name="searchDeckByName" id="searchDeckByName" placeholder="Deck Name..." style="width: 250px; height: 30px">
-                    <input type="submit" class="btn btn-success" value="Search">
-                </form>
-            </div>
-            <div>
-                <form action="">
-                    <input type="submit" class="btn btn-success" value="Login">
-                    <input type="submit" class="btn btn-success" value="Sign Up">
-                </form>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="/home">
+            <img src="images/logo.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+            SKATESHOP
+        </a>
+    </nav>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/home">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Contact</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input type="hidden" name="action" value="searchDeckByName">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search..." aria-label="Search"
+                   name="searchDeckByName" id="searchDeckByName">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+
+        <a href="/customers?action=login" class="btn btn-success">Login</a>
+        <a href="/customers?action=register" class="btn btn-success">Register</a>
+
+
+        <div>
+            <div class="modal fade" id="loginModal" tabindex="-1"
+                 role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="container">
+                                <form action="/home?action=login" method="post">
+                                    <h1 style="color: black;">Login</h1>
+                                    <hr>
+                                    <table>
+                                        <tr>
+                                            <th>Username: </th>
+                                            <td>
+                                                <input type="text" name="username" id="username">
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Password: </th>
+                                            <td>
+                                                <input type="password" name="password" id="password">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <input type="submit" value="Login" class="btn btn-success">
+                                </form>
+                                <a id="registerButton" href="/customers?action=register" class="btn btn-success">Register</a>
+                                <div class="modal-footer">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-danger"
+                                    data-dismiss="modal">CLOSE
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<%--<div id="menu">--%>
-<%--    <div style="left: 50px">--%>
-<%--        <ul>--%>
-<%--            <li><a href="#">Sem 1</a>--%>
-<%--                <ul>--%>
-<%--                    <li><a target="_blank" href="https://www.coursera.org/specializations/computer-fundamentals">Computing--%>
-<%--                        Fundametal</a></li>--%>
-<%--                    <li><a target="_blank" href="https://en.wikipedia.org/wiki/C_(programming_language)">C--%>
-<%--                        Programming</a></li>--%>
-<%--                    <li><a target="_blank" href="https://www.wikihow.com/Build-a-Dynamic-Website">Building Dynamic--%>
-<%--                        Website</a></li>--%>
-<%--                    <li><a target="_blank"--%>
-<%--                           href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_SQLServer.html">M5--%>
-<%--                        Transact-SQL</a></li>--%>
-<%--                    <li><a target="_blank"--%>
-<%--                           href="https://dictionary.cambridge.org/vi/dictionary/english/project">Project</a></li>--%>
-<%--                </ul>--%>
-<%--            </li>--%>
-<%--            <li><a href="#">Sem 2</a>--%>
-<%--                <ul>--%>
-<%--                    <li><a href="#">Cloud Computing</a></li>--%>
-<%--                    <li><a href="#">APJ - I</a></li>--%>
-<%--                    <li><a href="#">APJ - II</a></li>--%>
-<%--                    <li><a href="#">APJ - III</a></li>--%>
-<%--                    <li><a href="#">eProject</a></li>--%>
-<%--                </ul>--%>
-<%--            </li>--%>
-<%--            <li><a href="#">Sem 3</a></li>--%>
-<%--            <li><a href="#">Sem 4</a></li>--%>
-<%--        </ul>--%>
-<%--    </div>--%>
-<%--</div>--%>
+</nav>
 <div class="container" id="content">
-    <p style="margin-top: 50px">SKATESHOP <i style="color: blue">Skateshop</i></p>
+    <p style="margin-top: 50px">Decks <i style="color: blue">(${decks.size()} items)</i></p>
+    <div>
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Sort By
+                <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+<%--                <li class="dropdown-header"><b>Size</b></li>--%>
+                <li><a href="/home?action=SizeLowToHigh">Size Low - High</a></li>
+                <li><a href="/home?action=SizeHighToLow">Size High - Low</a></li>
+<%--                <li class="dropdown-header"><b>Price</b></li>--%>
+                <li><a href="/home?action=PriceLowToHigh">Price Low - High</a></li>
+                <li><a href="/home?action=PriceHighToLow">Price High - Low</a></li>
+            </ul>
+        </div>
+    </div>
+
+<%--    <div>--%>
+<%--        <div class="dropdown">--%>
+<%--            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Brand--%>
+<%--                <span class="caret"></span></button>--%>
+<%--            <ul class="dropdown-menu">--%>
+<%--                <c:forEach items="decks" var="deck">--%>
+<%--                    <li>${deck.getDeckName()}</li>--%>
+<%--                </c:forEach>--%>
+<%--            </ul>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+
     <hr>
     <div class="row">
         <c:forEach items="${decks}" var="deck">
-            <div class="col-md-6 col-lg-4" style="margin-bottom: 0px; border: 1px solid black; border-radius: 10px">
+            <div class="col-md-6 col-lg-4">
                 <div class="single_service">
                     <div class="thumb">
-                        <div><img src="${deck.getDeckImage()}" style="height: 100px"></div>
+                        <div><img src="${deck.getDeckImage()}" style="height: 220px; width: 200px"></div>
                     </div>
                     <div class="service_infor">
-                        <p>Name: <a href="/decks?action=view&deckId=${deck.getDeckId()}">${deck.getDeckName()}</a>
-                        </p>
-                        <p>Price: ${deck.getDeckPrice()}</p>
-                        <p>Size ${deck.getDeckSize()}</p>
+                        <p>Name: <b>${deck.getDeckName()}</b></p>
+                        <p>Price: <b>${deck.getDeckPrice()}</b></p>
+                        <p>Size: <b>${deck.getDeckSize()}</b></p>
                         <div class="row">
                             <div class="col">
                                 <button type="button" class="btn btn-outline-secondary" data-toggle="modal"
                                         data-target="#exampleModalUpdate${deck.getDeckId()}">Quick View
                                 </button>
+                                <hr>
                                 <div class="modal fade" id="exampleModalUpdate${deck.getDeckId()}" tabindex="-1"
-                                     role="dialog"
-                                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                     role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <div class="container">
-                                                    <h2>Login For More Information</h2>
-                                                    <form method="post" action="/login">
-                                                        <label>Username</label>
-                                                        <input type="text" class="form-control" name="userName"
-                                                               placeholder="account">
-                                                        <label>Password</label>
-                                                        <input type="password" class="form-control" name="password"
-                                                               placeholder="passwords">
-                                                        <div class="modal-footer">
-                                                            <button type="submit" class="btn btn-primary">Sign In
-                                                            </button>
-                                                            <a href="/customers?action=signUp"
-                                                               class="btn btn-success">Sign Up</a>
-                                                        </div>
-                                                        <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Close
-                                                        </button>
-                                                    </form>
+                                                    <h2>${deck.getDeckName()}</h2>
+                                                    <img src="${deck.getDeckImage()}" height="300px" width="300px">
+                                                    <h3>- Price: ${deck.getDeckPrice()}</h3>
+                                                    <h3>- Size: ${deck.getDeckSize()}</h3>
+                                                    <p>- Description: ${deck.getDeckDescription()}</p>
+                                                    <div class="modal-footer">
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Close
+                                                        data-dismiss="modal">CLOSE
                                                 </button>
                                             </div>
                                         </div>
@@ -147,85 +170,51 @@
 </div>
 </body>
 <style>
-    .navbar {
-        background-color: #333;
-        top: 0;
+    input[type=text] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
     }
 
-    .navbar a {
-        float: left;
-        display: block;
-        color: #F2F2F2;
-        text-align: center;
-        padding: 8px 10px;
-        text-decoration: none;
-        font-size: 17px;
+    input[type=password] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
     }
 
-    .navbar a:hover {
-        background-color: white;
-        color: #333333;
-    }
-
-    body {
-        font-family: Arial, Tahoma;
-    }
-
-    h1 {
+    input[type=submit] {
+        width: 100%;
+        background-color: #4CAF50;
         color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
     }
 
-    #menu {
-        height: 50px;
-        padding: 0;
-        margin: 0;
-        background-color: #000000;
-        border: 1px solid #CDCDCD;
+    input[type=submit]:hover {
+        background-color: #45a049;
     }
 
-    #menu ul, #menu li {
-        padding: 0;
-        margin: 0;
-    }
-
-    #menu li {
-        position: relative;
-        float: left;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-    }
-
-    #menu li a {
-        width: 100px;
-        height: 30px;
-        display: block;
-        text-decoration: none;
-        text-align: center;
-        line-height: 30px;
-        background-color: black;
+    #registerButton {
+        width: 100%;
+        background-color: #4CAF50;
         color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
     }
 
-    #menu ul ul li a {
-        width: 200px;
-        text-align: left;
-        padding-left: 10px;
-    }
-
-    #menu li a:hover {
-        background-color: red;
-    }
-
-    #menu ul ul {
-        position: absolute;
-        top: 30px;
-        left: 15px;
-        visibility: hidden;
-    }
-
-    #menu ul li:hover ul {
-        visibility: visible;
-    }
 </style>
 </html>

@@ -28,7 +28,7 @@
     <p>
         <a href="/decks" class="btn btn-primary">Back To Deck List</a>
     </p>
-    <table border="1" cellpadding="10px" width="90%">
+    <table border="1" cellpadding="10px">
         <tr>
             <th>Deck ID</th>
             <th>Deck Name</th>

@@ -23,6 +23,10 @@ public class DeckServiceImpl implements IDeckService {
     private static final String ADD_NEW_DECK = "{CALL addNewDeck(?,?,?,?,?,?,?,?)}";
     private static final String UPDATE_DECK_BY_ID = "{CALL updateDeckById(?,?,?,?,?,?,?,?)}";
     private static final String DELETE_DECK_BY_ID = "{CALL deleteDeckById(?)}";
+    private static final String SORT_DECK_SIZE_LOW_TO_HIGH = "{CALL sortSizeFromLowToHigh()}";
+    private static final String SORT_DECK_SIZE_HIGH_TO_LOW = "{CALL sortSizeFromHighToLow()}";
+    private static final String SORT_DECK_PRICE_LOW_TO_HIGH = "{CALL sortPriceFromLowToHigh()}";
+    private static final String SORT_DECK_PRICE_HIGH_TO_LOW = "{CALL sortPriceFromHighToLow()}";
 
     protected Connection getConnection() {
         Connection connection = null;
@@ -149,5 +153,97 @@ public class DeckServiceImpl implements IDeckService {
             callableStatement.setInt(1, deckId);
             callableStatement.executeUpdate();
         }
+    }
+
+    @Override
+    public List<Deck> sortSizeFromLowToHigh() {
+        List<Deck> decksSizeLowToHigh = new ArrayList<>();
+        try (Connection connection = getConnection();
+             CallableStatement callableStatement = connection.prepareCall(SORT_DECK_SIZE_LOW_TO_HIGH)) {
+            ResultSet rs = callableStatement.executeQuery();
+            while (rs.next()) {
+                int deckId = rs.getInt("deckId");
+                String deckName = rs.getString("deckName");
+                double deckPrice = rs.getDouble("deckPrice");
+                double deckSize = rs.getDouble("deckSize");
+                String deckImage = rs.getString("deckImage");
+                String deckDesc = rs.getString("deckDescription");
+                Type typeId = typeService.searchTypeById(rs.getString("typeId"));
+                Brand brandId = brandService.searchBrandById(rs.getString("brandId"));
+                decksSizeLowToHigh.add(new Deck(deckId, deckName, deckPrice, deckSize, deckImage, deckDesc, typeId, brandId));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return decksSizeLowToHigh;
+    }
+
+    @Override
+    public List<Deck> sortSizeFromHighToLow() {
+        List<Deck> decksSizeHighToLow = new ArrayList<>();
+        try (Connection connection = getConnection();
+             CallableStatement callableStatement = connection.prepareCall(SORT_DECK_SIZE_HIGH_TO_LOW)) {
+            ResultSet rs = callableStatement.executeQuery();
+            while (rs.next()) {
+                int deckId = rs.getInt("deckId");
+                String deckName = rs.getString("deckName");
+                double deckPrice = rs.getDouble("deckPrice");
+                double deckSize = rs.getDouble("deckSize");
+                String deckImage = rs.getString("deckImage");
+                String deckDesc = rs.getString("deckDescription");
+                Type typeId = typeService.searchTypeById(rs.getString("typeId"));
+                Brand brandId = brandService.searchBrandById(rs.getString("brandId"));
+                decksSizeHighToLow.add(new Deck(deckId, deckName, deckPrice, deckSize, deckImage, deckDesc, typeId, brandId));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return decksSizeHighToLow;
+    }
+
+    @Override
+    public List<Deck> sortPriceFromLowToHigh() {
+        List<Deck> decksPriceLowToHigh = new ArrayList<>();
+        try (Connection connection = getConnection();
+             CallableStatement callableStatement = connection.prepareCall(SORT_DECK_PRICE_LOW_TO_HIGH)) {
+            ResultSet rs = callableStatement.executeQuery();
+            while (rs.next()) {
+                int deckId = rs.getInt("deckId");
+                String deckName = rs.getString("deckName");
+                double deckPrice = rs.getDouble("deckPrice");
+                double deckSize = rs.getDouble("deckSize");
+                String deckImage = rs.getString("deckImage");
+                String deckDesc = rs.getString("deckDescription");
+                Type typeId = typeService.searchTypeById(rs.getString("typeId"));
+                Brand brandId = brandService.searchBrandById(rs.getString("brandId"));
+                decksPriceLowToHigh.add(new Deck(deckId, deckName, deckPrice, deckSize, deckImage, deckDesc, typeId, brandId));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return decksPriceLowToHigh;
+    }
+
+    @Override
+    public List<Deck> sortPriceFromHighToLow() {
+        List<Deck> decksPriceHighToLow = new ArrayList<>();
+        try (Connection connection = getConnection();
+             CallableStatement callableStatement = connection.prepareCall(SORT_DECK_PRICE_HIGH_TO_LOW)) {
+            ResultSet rs = callableStatement.executeQuery();
+            while (rs.next()) {
+                int deckId = rs.getInt("deckId");
+                String deckName = rs.getString("deckName");
+                double deckPrice = rs.getDouble("deckPrice");
+                double deckSize = rs.getDouble("deckSize");
+                String deckImage = rs.getString("deckImage");
+                String deckDesc = rs.getString("deckDescription");
+                Type typeId = typeService.searchTypeById(rs.getString("typeId"));
+                Brand brandId = brandService.searchBrandById(rs.getString("brandId"));
+                decksPriceHighToLow.add(new Deck(deckId, deckName, deckPrice, deckSize, deckImage, deckDesc, typeId, brandId));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return decksPriceHighToLow;
     }
 }

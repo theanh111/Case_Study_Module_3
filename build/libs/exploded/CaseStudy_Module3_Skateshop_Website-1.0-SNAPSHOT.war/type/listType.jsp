@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>View Type</title>
+    <title>Type Management</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -27,7 +27,7 @@
     <div id="main">
         <div id="head">
             <div class="navbar">
-                <h1>Type</h1>
+                <h1>Types List</h1>
                 <a target="_blank" href="/decks">
                     <img src="images/logo.png" height="50" width="50"/>
                 </a>
@@ -43,7 +43,6 @@
                 </form>
             </div>
         </div>
-        <h1>Type Detail</h1>
         <p>
             <a href="/decks" class="btn btn-primary">Back To Deck List</a>
         </p>
@@ -66,6 +65,7 @@
                 </tr>
             </c:forEach>
         </table>
+    </div>
 </center>
 </body>
 <style>

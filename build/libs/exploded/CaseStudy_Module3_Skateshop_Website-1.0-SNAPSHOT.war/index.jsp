@@ -23,57 +23,69 @@ To change this template use File | Settings | File Templates.
             crossorigin="anonymous"></script>
 </head>
 <body>
-<center>
-    <h1>Welcome to Skateshop - Web Application</h1>
-    <form action="/decks">
-        <input type="submit" value="Admin Page">
-    </form>
-    <form action="/home">
-        <input type="submit" value="Home">
-    </form>
-</center>
-<div id="main">
-    <div id="head">
-        <div class="navbar">
-            <a target="_blank" href="https://github.com/theanh111">
-                <img src="images/logo.png" height="100" width="100"/>
-            </a>
-            <a target="_blank" href="https://github.com/theanh111">Home</a>
-            <a target="_blank" href="https://github.com/theanh111">Skateboard</a>
-            <a target="_blank" href="https://github.com/theanh111">Truck</a>
-            <a target="_blank" href="https://github.com/theanh111">About</a>
-            <form>
-                <input type="text" placeholder="Example: NOMAD Black">
-                <input type="submit" value="Search">
-            </form>
-        </div>
+<div class="background">
+    <div class="caption">
+        <h1>WELCOME TO <span style="color: #32CD32">SKATESHOP</span></h1>
+        <h5>Skateshop For <span style="color: #32CD32;"> Skateboarders!</span></h5>
     </div>
+    <div>
+        <form action="/home">
+            <input class="button" type="submit" value="Let's Start!">
+        </form>
+    </div>
+    <div class="copyright"><p>Tran The Anh C0720I1 - 2020 ©</p></div>
 </div>
 </body>
 <style>
-    .navbar {
-        background-color: #333;
-        top: 0;
+    body, html {
+        height: 100%;
+        margin: 0;
+        font-weight: bold;
+        font-family: Arial, Helvetica, sans-serif;
     }
 
-    .navbar a {
-        float: left;
-        display: block;
-        color: #F2F2F2;
+    .background {
+        background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(60, 205, 50, 0.1)),
+        url("images/background.jpg");
+        height: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding: 0;
+        display: grid;
+        max-width: 100%;
+        max-height: 100vh;
+        margin: auto;
+    }
+
+    .caption {
+        border: 5px #FFFFFF;
+        height: 1px;
         text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-        font-size: 17px;
+        font-size: xx-large;
+        margin-left: auto;
+        margin-right: auto;
+        color: #FFFFFF;
+        padding-top: 150px;
+        line-height: 20px;
     }
 
-    .navbar a:hover {
-        background-color: white;
-        color: #333333;
+    .copyright {
+        color: #FFFFFF;
+        margin-top: auto;
+        margin-left: auto;
+        margin-right: auto;
     }
 
-    body {
-        margin: 0 auto;
-        font-family: Arial, Tahoma;
+    .button {
+        width: 100px;
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
     }
 </style>
 </html>
