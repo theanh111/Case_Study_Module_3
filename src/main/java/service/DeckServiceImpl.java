@@ -1,7 +1,6 @@
 package service;
 
 import model.Brand;
-import model.Customer;
 import model.Deck;
 import model.Type;
 
@@ -13,9 +12,7 @@ public class DeckServiceImpl implements IDeckService {
     BrandServiceImpl brandService = new BrandServiceImpl();
     TypeServiceImpl typeService = new TypeServiceImpl();
 
-    private String jdbcURL = "jdbc:mysql://localhost:3306/skateshop?useSSL=false";
-    private String jdbcUsername = "root";
-    private String jdbcPassword = "TheanHtran111@";
+    Connection connection = ConnectDB.getConnect();
 
     private static final String SELECT_ALL_DECK_SQL = "{CALL selectAllDeckSQL()}";
     private static final String SEARCH_DECK_BY_ID = "{CALL searchDeckById(?)}";
@@ -28,23 +25,9 @@ public class DeckServiceImpl implements IDeckService {
     private static final String SORT_DECK_PRICE_LOW_TO_HIGH = "{CALL sortPriceFromLowToHigh()}";
     private static final String SORT_DECK_PRICE_HIGH_TO_LOW = "{CALL sortPriceFromHighToLow()}";
 
-    protected Connection getConnection() {
-        Connection connection = null;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return connection;
-    }
-
     @Override
     public List<Deck> searchDeckByName(String deckName) {
         List<Deck> decksByName = new ArrayList<>();
-        Connection connection = getConnection();
         try {
             CallableStatement callableStatement = connection.prepareCall(SEARCH_DECK_BY_NAME);
             callableStatement.setString(1, deckName);
@@ -69,8 +52,8 @@ public class DeckServiceImpl implements IDeckService {
     @Override
     public List<Deck> findAll() {
         List<Deck> decks = new ArrayList<>();
-        try (Connection connection = getConnection();
-             CallableStatement callableStatement = connection.prepareCall(SELECT_ALL_DECK_SQL)) {
+        try {
+            CallableStatement callableStatement = connection.prepareCall(SELECT_ALL_DECK_SQL);
             ResultSet rs = callableStatement.executeQuery();
             while (rs.next()) {
                 int deckId = rs.getInt("deckId");
@@ -92,8 +75,8 @@ public class DeckServiceImpl implements IDeckService {
     @Override
     public Deck selectDeck(int deckId) {
         Deck deck = null;
-        try (Connection connection = getConnection();
-             CallableStatement callableStatement = connection.prepareCall(SEARCH_DECK_BY_ID)) {
+        try {
+            CallableStatement callableStatement = connection.prepareCall(SEARCH_DECK_BY_ID);
             callableStatement.setInt(1, deckId);
             ResultSet rs = callableStatement.executeQuery();
             while (rs.next()) {
@@ -114,8 +97,8 @@ public class DeckServiceImpl implements IDeckService {
 
     @Override
     public void addNewDeck(Deck deck) {
-        try (Connection connection = getConnection();
-             CallableStatement callableStatement = connection.prepareCall(ADD_NEW_DECK)) {
+        try {
+            CallableStatement callableStatement = connection.prepareCall(ADD_NEW_DECK);
             callableStatement.setInt(1, deck.getDeckId());
             callableStatement.setString(2, deck.getDeckName());
             callableStatement.setDouble(3, deck.getDeckPrice());
@@ -132,34 +115,30 @@ public class DeckServiceImpl implements IDeckService {
 
     @Override
     public void update(int id, Deck deck) throws SQLException {
-        try (Connection connection = getConnection();
-             CallableStatement callableStatement = connection.prepareCall(UPDATE_DECK_BY_ID)) {
-            callableStatement.setInt(1, deck.getDeckId());
-            callableStatement.setString(2, deck.getDeckName());
-            callableStatement.setDouble(3, deck.getDeckPrice());
-            callableStatement.setDouble(4, deck.getDeckSize());
-            callableStatement.setString(5, deck.getDeckImage());
-            callableStatement.setString(6, deck.getDeckDescription());
-            callableStatement.setString(7, deck.getTypeId().getTypeId());
-            callableStatement.setString(8, deck.getBrandId().getBrandId());
-            callableStatement.executeUpdate();
-        }
+        CallableStatement callableStatement = connection.prepareCall(UPDATE_DECK_BY_ID);
+        callableStatement.setInt(1, deck.getDeckId());
+        callableStatement.setString(2, deck.getDeckName());
+        callableStatement.setDouble(3, deck.getDeckPrice());
+        callableStatement.setDouble(4, deck.getDeckSize());
+        callableStatement.setString(5, deck.getDeckImage());
+        callableStatement.setString(6, deck.getDeckDescription());
+        callableStatement.setString(7, deck.getTypeId().getTypeId());
+        callableStatement.setString(8, deck.getBrandId().getBrandId());
+        callableStatement.executeUpdate();
     }
 
     @Override
     public void delete(int deckId) throws SQLException {
-        try (Connection connection = getConnection();
-             CallableStatement callableStatement = connection.prepareCall(DELETE_DECK_BY_ID)) {
-            callableStatement.setInt(1, deckId);
-            callableStatement.executeUpdate();
-        }
+        CallableStatement callableStatement = connection.prepareCall(DELETE_DECK_BY_ID);
+        callableStatement.setInt(1, deckId);
+        callableStatement.executeUpdate();
     }
 
     @Override
     public List<Deck> sortSizeFromLowToHigh() {
         List<Deck> decksSizeLowToHigh = new ArrayList<>();
-        try (Connection connection = getConnection();
-             CallableStatement callableStatement = connection.prepareCall(SORT_DECK_SIZE_LOW_TO_HIGH)) {
+        try {
+            CallableStatement callableStatement = connection.prepareCall(SORT_DECK_SIZE_LOW_TO_HIGH);
             ResultSet rs = callableStatement.executeQuery();
             while (rs.next()) {
                 int deckId = rs.getInt("deckId");
@@ -181,8 +160,8 @@ public class DeckServiceImpl implements IDeckService {
     @Override
     public List<Deck> sortSizeFromHighToLow() {
         List<Deck> decksSizeHighToLow = new ArrayList<>();
-        try (Connection connection = getConnection();
-             CallableStatement callableStatement = connection.prepareCall(SORT_DECK_SIZE_HIGH_TO_LOW)) {
+        try {
+            CallableStatement callableStatement = connection.prepareCall(SORT_DECK_SIZE_HIGH_TO_LOW);
             ResultSet rs = callableStatement.executeQuery();
             while (rs.next()) {
                 int deckId = rs.getInt("deckId");
@@ -204,8 +183,8 @@ public class DeckServiceImpl implements IDeckService {
     @Override
     public List<Deck> sortPriceFromLowToHigh() {
         List<Deck> decksPriceLowToHigh = new ArrayList<>();
-        try (Connection connection = getConnection();
-             CallableStatement callableStatement = connection.prepareCall(SORT_DECK_PRICE_LOW_TO_HIGH)) {
+        try {
+            CallableStatement callableStatement = connection.prepareCall(SORT_DECK_PRICE_LOW_TO_HIGH);
             ResultSet rs = callableStatement.executeQuery();
             while (rs.next()) {
                 int deckId = rs.getInt("deckId");
@@ -227,8 +206,8 @@ public class DeckServiceImpl implements IDeckService {
     @Override
     public List<Deck> sortPriceFromHighToLow() {
         List<Deck> decksPriceHighToLow = new ArrayList<>();
-        try (Connection connection = getConnection();
-             CallableStatement callableStatement = connection.prepareCall(SORT_DECK_PRICE_HIGH_TO_LOW)) {
+        try {
+            CallableStatement callableStatement = connection.prepareCall(SORT_DECK_PRICE_HIGH_TO_LOW);
             ResultSet rs = callableStatement.executeQuery();
             while (rs.next()) {
                 int deckId = rs.getInt("deckId");

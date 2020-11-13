@@ -11,6 +11,8 @@ public interface IBrandService {
 
     Brand selectBrand(String brandId);
 
+    Brand getBrandByName(String brandName);
+
     List<Brand> searchBrandByName(String brandName);
 
     void addNewBrand(Brand brand);

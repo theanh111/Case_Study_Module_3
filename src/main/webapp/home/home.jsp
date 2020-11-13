@@ -17,6 +17,7 @@
 </head>
 <body>
 
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="/home">
@@ -36,7 +37,12 @@
                 <a class="nav-link" href="#">Contact</a>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
+        <div>
+            <c:if test='${message != null}'>
+                <span class="message">Welcome, ${message}</span>
+            </c:if>
+        </div>
+        <form autocomplete="off" class="form-inline my-2 my-lg-0">
             <input type="hidden" name="action" value="searchDeckByName">
             <input class="form-control mr-sm-2" type="text" placeholder="Search..." aria-label="Search"
                    name="searchDeckByName" id="searchDeckByName">
@@ -47,49 +53,75 @@
         <a href="/customers?action=register" class="btn btn-success">Register</a>
 
 
-        <div>
-            <div class="modal fade" id="loginModal" tabindex="-1"
-                 role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <div class="container">
-                                <form action="/home?action=login" method="post">
-                                    <h1 style="color: black;">Login</h1>
-                                    <hr>
-                                    <table>
-                                        <tr>
-                                            <th>Username: </th>
-                                            <td>
-                                                <input type="text" name="username" id="username">
-                                            </td>
-                                        </tr>
+        <%--        <div>--%>
+        <%--            <div class="modal fade" id="loginModal" tabindex="-1"--%>
+        <%--                 role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">--%>
+        <%--                <div class="modal-dialog modal-dialog-centered" role="document">--%>
+        <%--                    <div class="modal-content">--%>
+        <%--                        <div class="modal-header">--%>
+        <%--                            <div class="container">--%>
+        <%--                                <form action="/home?action=login" method="post">--%>
+        <%--                                    <h1 style="color: black;">Login</h1>--%>
+        <%--                                    <hr>--%>
+        <%--                                    <table>--%>
+        <%--                                        <tr>--%>
+        <%--                                            <th>Username: </th>--%>
+        <%--                                            <td>--%>
+        <%--                                                <input type="text" name="username" id="username">--%>
+        <%--                                            </td>--%>
+        <%--                                        </tr>--%>
 
-                                        <tr>
-                                            <th>Password: </th>
-                                            <td>
-                                                <input type="password" name="password" id="password">
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    <input type="submit" value="Login" class="btn btn-success">
-                                </form>
-                                <a id="registerButton" href="/customers?action=register" class="btn btn-success">Register</a>
-                                <div class="modal-footer">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-danger"
-                                    data-dismiss="modal">CLOSE
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <%--                                        <tr>--%>
+        <%--                                            <th>Password: </th>--%>
+        <%--                                            <td>--%>
+        <%--                                                <input type="password" name="password" id="password">--%>
+        <%--                                            </td>--%>
+        <%--                                        </tr>--%>
+        <%--                                    </table>--%>
+        <%--                                    <input type="submit" value="Login" class="btn btn-success">--%>
+        <%--                                </form>--%>
+        <%--                                <a id="registerButton" href="/customers?action=register" class="btn btn-success">Register</a>--%>
+        <%--                                <div class="modal-footer">--%>
+        <%--                                </div>--%>
+        <%--                            </div>--%>
+        <%--                        </div>--%>
+        <%--                        <div class="modal-footer">--%>
+        <%--                            <button type="button" class="btn btn-outline-danger"--%>
+        <%--                                    data-dismiss="modal">CLOSE--%>
+        <%--                            </button>--%>
+        <%--                        </div>--%>
+        <%--                    </div>--%>
+        <%--                </div>--%>
+        <%--            </div>--%>
+    </div>
     </div>
 </nav>
+
+<div>
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="images/banner-header1.jpg" alt="First slide" style="width: 50% ; height: 650px">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="images/banner-header2.jpg" alt="Second slide"
+                     style="width: 50% ; height: 650px">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="images/banner-header3.jpg" alt="Third slide" style="width: 50%; height: 650px">
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+
 <div class="container" id="content">
     <p style="margin-top: 50px">Decks <i style="color: blue">(${decks.size()} items)</i></p>
     <div>
@@ -97,27 +129,13 @@
             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Sort By
                 <span class="caret"></span></button>
             <ul class="dropdown-menu">
-<%--                <li class="dropdown-header"><b>Size</b></li>--%>
                 <li><a href="/home?action=SizeLowToHigh">Size Low - High</a></li>
                 <li><a href="/home?action=SizeHighToLow">Size High - Low</a></li>
-<%--                <li class="dropdown-header"><b>Price</b></li>--%>
                 <li><a href="/home?action=PriceLowToHigh">Price Low - High</a></li>
                 <li><a href="/home?action=PriceHighToLow">Price High - Low</a></li>
             </ul>
         </div>
     </div>
-
-<%--    <div>--%>
-<%--        <div class="dropdown">--%>
-<%--            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Brand--%>
-<%--                <span class="caret"></span></button>--%>
-<%--            <ul class="dropdown-menu">--%>
-<%--                <c:forEach items="decks" var="deck">--%>
-<%--                    <li>${deck.getDeckName()}</li>--%>
-<%--                </c:forEach>--%>
-<%--            </ul>--%>
-<%--        </div>--%>
-<%--    </div>--%>
 
     <hr>
     <div class="row">
@@ -168,6 +186,46 @@
         </c:forEach>
     </div>
 </div>
+
+<div class="footer">
+    <footer class="page-footer font-small special-color-dark pt-4">
+        <div class="container">
+
+            <ul class="list-unstyled list-inline text-center">
+                <li class="list-inline-item">
+                    <a class="btn-floating btn-fb mx-1">
+                        <img src="images/icon.jpg" width="40px" height="40px">
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a class="btn-floating btn-tw mx-1">
+                        <img src="images/icon2.jpg" width="40px" height="40px">
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a class="btn-floating btn-gplus mx-1">
+                        <img src="images/icon.jpg" width="40px" height="40px">
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a class="btn-floating btn-li mx-1">
+                        <img src="images/icon2.jpg" width="40px" height="40px">
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a class="btn-floating btn-dribbble mx-1">
+                        <img src="images/icon.jpg" width="40px" height="40px">
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="footer-copyright text-center py-3">© 2020 Copyright:
+            <a class="nav-link" href="https://github.com/theanh111"> Trần Thế Anh - C0720I1 </a>
+        </div>
+
+    </footer>
+</div>
+
 </body>
 <style>
     input[type=text] {
@@ -180,41 +238,22 @@
         box-sizing: border-box;
     }
 
-    input[type=password] {
-        width: 100%;
-        padding: 12px 20px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
-
-    input[type=submit] {
-        width: 100%;
-        background-color: #4CAF50;
-        color: white;
-        padding: 14px 20px;
-        margin: 8px 0;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
     input[type=submit]:hover {
         background-color: #45a049;
     }
 
-    #registerButton {
-        width: 100%;
-        background-color: #4CAF50;
-        color: white;
-        padding: 14px 20px;
-        margin: 8px 0;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
+    .footer {
+        background-color: black;
     }
 
+    footer {
+        background-color: black;
+    }
+
+    hr {
+        border: 0;
+        height: 1px;
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    }
 </style>
 </html>

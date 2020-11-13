@@ -19,6 +19,7 @@ public class TypeServiceImpl implements ITypeService {
     private static final String DELETE_TYPE_BY_ID = "{CALL deleteTypeById(?)}";
     private static final String SEARCH_TYPE_BY_ID = "{CALL searchTypeById(?)}";
     private static final String SEARCH_TYPE_BY_NAME = "{CALL searchTypeByName(?)}";
+    private static final String GET_TYPE_BY_NAME = "{CALL getTypeByName(?)}";
     private static final String UPDATE_TYPE_BY_ID = "{CALL updateTypeById(?,?,?)}";
 
     protected Connection getConnection() {
@@ -144,5 +145,24 @@ public class TypeServiceImpl implements ITypeService {
             throwables.printStackTrace();
         }
         return typesByName;
+    }
+
+    @Override
+    public Type getTypeByName(String typeName) {
+        Type type = null;
+        Connection connection = getConnection();
+        try {
+            CallableStatement callableStatement = connection.prepareCall(GET_TYPE_BY_NAME);
+            callableStatement.setString(1, typeName);
+            ResultSet rs = callableStatement.executeQuery();
+            while (rs.next()) {
+                String typeId = rs.getString("typeId");
+                String typeStatus = rs.getString("typeStatus");
+                type = new Type(typeId, typeName, typeStatus);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return type;
     }
 }

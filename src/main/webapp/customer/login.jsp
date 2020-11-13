@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Login</title>
@@ -18,10 +18,10 @@
         <div class="login-form">
             <h1>LOGIN</h1>
             <hr>
-            <form method="post" action="/customers?action=login">
+            <form autocomplete="off" method="post" action="/customers?action=login">
                 <div class="form-group">
                     <label>Username</label>
-                    <input type="text" class="form-control" name="username" id="username" placeholder="User Name">
+                    <input type="text" class="form-control" name="username" id="username" placeholder="Username">
                 </div>
                 <div class="form-group">
                     <label>Password</label>
@@ -32,8 +32,8 @@
             </form>
         </div>
         <div>
-            <c:if test='${requestScope["message"] != null}'>
-                <span class="message">${requestScope["message"]}</span>
+            <c:if test='${message != null}'>
+                <span class="message">${message}</span>
             </c:if>
         </div>
     </div>

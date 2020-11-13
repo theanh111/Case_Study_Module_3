@@ -56,24 +56,10 @@ public class HomeServlet extends HttpServlet {
         if (action == null) {
             action = "";
         }
-//        switch (action) {
-//            case "login":
-//                login(request, response);
-//                break;
-//        }
-    }
+        switch (action) {
 
-//    private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        String username = request.getParameter("username");
-//        String password = request.getParameter("password");
-//        if (username.equals("admin") && password.equals("admin")) {
-//            response.sendRedirect("/decks");
-//        } else {
-//            RequestDispatcher dispatcher = request.getRequestDispatcher("customer/error404.jsp");
-//            request.setAttribute("message", "Wrong Information!");
-//            dispatcher.forward(request, response);
-//        }
-//    }
+        }
+    }
 
     private void searchDeckByName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String deckName = request.getParameter("searchDeckByName");

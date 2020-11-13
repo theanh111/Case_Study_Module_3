@@ -1,3 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,14 +20,18 @@
         <div class="register-form">
             <h1>REGISTER</h1>
             <hr>
-            <form method="post" action="/customers?action=register">
+            <form autocomplete="off" method="post" action="/customers?action=register">
                 <div class="form-group">
                     <label>Full Name</label>
-                    <input type="text" class="form-control" name="customerName" id="customerName" placeholder="Tran The Anh...">
+                    <input type="text" class="form-control" name="customerName" id="customerName" placeholder="Trần Thế Anh...">
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="text" class="form-control" name="customerPhone" id="customerPhone" placeholder="0918273645">
                 </div>
                 <div class="form-group">
                     <label>Address</label>
-                    <input type="text" class="form-control" name="customerAddress" id="customerAddress" placeholder="So 23, lo TT-01, Khu đo thi Mon City...">
+                    <input type="text" class="form-control" name="customerAddress" id="customerAddress" placeholder="Số 23, lô TT-04, khu đô thị Mon City...">
                 </div>
                 <div class="form-group">
                     <label>Username</label>
@@ -35,13 +41,13 @@
                     <label>Password</label>
                     <input type="password" class="form-control" name="password" id="password" placeholder="********">
                 </div>
-                <a href="/customers?action=login" class="btn btn-black">Login</a>
-                <input type="submit" class="btn btn-secondary" value="Register">
+                <input type="submit" class="btn btn-black" value="Register">
+                <a href="/customers?action=login" class="btn btn-secondary">Login</a>
             </form>
         </div>
         <div>
-            <c:if test='${requestScope["message"] != null}'>
-                <span class="message">${requestScope["message"]}</span>
+            <c:if test='${message != null}'>
+                <span class="message">${message}</span>
             </c:if>
         </div>
     </div>
@@ -50,7 +56,7 @@
 </html>
 <style>
     .message {
-        color: red;
+        color: green;
     }
 
     body {

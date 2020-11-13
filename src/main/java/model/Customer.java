@@ -3,7 +3,7 @@ package model;
 public class Customer {
     private int customerId;
     private String customerName;
-    private String customerNumber;
+    private String customerPhone;
     private String customerAddress;
     private String username;
     private String password;
@@ -11,10 +11,18 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(int customerId, String customerName, String customerNumber, String customerAddress, String username, String password) {
+    public Customer(String customerName, String customerPhone, String customerAddress, String username, String password) {
+        this.customerName = customerName;
+        this.customerPhone = customerPhone;
+        this.customerAddress = customerAddress;
+        this.username = username;
+        this.password = password;
+    }
+
+    public Customer(int customerId, String customerName, String customerPhone, String customerAddress, String username, String password) {
         this.customerId = customerId;
         this.customerName = customerName;
-        this.customerNumber = customerNumber;
+        this.customerPhone = customerPhone;
         this.customerAddress = customerAddress;
         this.username = username;
         this.password = password;
@@ -36,12 +44,12 @@ public class Customer {
         this.customerName = customerName;
     }
 
-    public String getCustomerNumber() {
-        return customerNumber;
+    public String getCustomerPhone() {
+        return customerPhone;
     }
 
-    public void setCustomerNumber(String customerNumber) {
-        this.customerNumber = customerNumber;
+    public void setCustomerPhone(String customerPhone) {
+        this.customerPhone = customerPhone;
     }
 
     public String getCustomerAddress() {

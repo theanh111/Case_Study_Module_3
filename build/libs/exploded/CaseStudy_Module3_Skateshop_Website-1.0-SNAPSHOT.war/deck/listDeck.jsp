@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;c   harset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Deck Management</title>
@@ -61,7 +61,7 @@
                                         <tr>
                                             <th>Deck Type:</th>
                                             <td>
-                                                <select name="deckType">
+                                                <select name="typeId">
                                                     <c:forEach items="${types}" var="type">
                                                         <option value="${type.getTypeId()}">${type.getTypeName()}</option>
                                                     </c:forEach>
@@ -72,7 +72,7 @@
                                         <tr>
                                             <th>Deck Brand:</th>
                                             <td>
-                                                <select name="deckBrand">
+                                                <select name="brandId">
                                                     <c:forEach items="${brands}" var="brand">
                                                         <option value="${brand.getBrandId()}">${brand.getBrandName()}</option>
                                                     </c:forEach>
@@ -124,7 +124,7 @@
                 <a href="/home">
                     <img src="images/logo.png" height="50" width="50"/>
                 </a>
-                <a class="btn btn-success" data-toggle="modal"
+                <a style="color: white" class="btn btn-success" data-toggle="modal"
                    data-target="#exampleModalAdd">Add New Deck
                 </a>
 
@@ -132,57 +132,66 @@
                 <a href="/brands?action=addNewBrand" class="btn btn-success">Add New Brand</a>
                 <a href="/types?action=showListType" class="btn btn-success">Show List Type</a>
                 <a href="/brands?action=showListBrand" class="btn btn-success">Show List Brand</a>
-                <form>
-                    <input type="hidden" name="action" value="searchDeckByName">
-                    <input type="text" name="searchDeckByName" id="searchDeckByName" placeholder="Deck Name...">
-                    <input type="submit" class="btn btn-success" value="Search">
-                </form>
+                <div>
+                    <c:if test='${message != null}'>
+                        <span class="message">Welcome, ${message}</span>
+                    </c:if>
+                    <form autocomplete="off">
+                        <input type="hidden" name="action" value="searchDeckByName">
+                        <input type="text" name="searchDeckByName" id="searchDeckByName" placeholder="Deck Name...">
+                        <input type="submit" class="btn btn-success" value="Search">
+                    </form>
+                </div>
             </div>
-        </div>
-        <hr>
-        <div class="container">
-            <table class="table" id="customers">
-                <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Size</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Brand</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Image</th>
-                    <th scope="col">Edit</th>
-                    <th scope="col">Delete</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach items="${decks}" var="deck">
+            <hr>
+            <div class="container">
+                <table class="table" id="decks">
+                    <thead>
                     <tr>
-                        <td>${deck.getDeckId()}</td>
-                        <td><a href="/decks?action=view&deckId=${deck.getDeckId()}">${deck.getDeckName()}</a></td>
-                        <td>${deck.getDeckPrice()}</td>
-                        <td>${deck.getDeckSize()}</td>
-                        <td>${deck.getTypeId().typeName}</td>
-                        <td>${deck.getBrandId().brandName}</td>
-                        <td>${deck.getDeckDescription()}</td>
-                        <td><img src="${deck.getDeckImage()}" alt="Deck Image Preview" width="50px" height="50px"></td>
-                        <th>
-                            <a href="/decks?action=editDeck&deckId=${deck.getDeckId()}"
-                               class="btn btn-secondary">EDIT</a>
-                        </th>
-                        <th><a href="/decks?action=deleteDeck&deckId=${deck.getDeckId()}"
-                               class="btn btn-danger">DELETE</a>
-                        </th>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Size</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Brand</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
                     </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${decks}" var="deck">
+                        <tr>
+                            <td>${deck.getDeckId()}</td>
+                            <td><a href="/decks?action=view&deckId=${deck.getDeckId()}">${deck.getDeckName()}</a></td>
+                            <td>${deck.getDeckPrice()}</td>
+                            <td>${deck.getDeckSize()}</td>
+                            <td>${deck.getTypeId().typeName}</td>
+                            <td>${deck.getBrandId().brandName}</td>
+                            <td>${deck.getDeckDescription()}</td>
+                            <td><img src="${deck.getDeckImage()}" alt="Deck Image Preview" width="50px" height="50px">
+                            </td>
+                            <th>
+                                <a href="/decks?action=editDeck&deckId=${deck.getDeckId()}"
+                                   class="btn btn-secondary">EDIT</a>
+                            </th>
+                            <th><a href="/decks?action=deleteDeck&deckId=${deck.getDeckId()}"
+                                   class="btn btn-danger">DELETE</a>
+                            </th>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </center>
 </body>
 <style>
+    span{
+        color: white;
+    }
     .navbar {
         background-color: #333;
         top: 0;
@@ -212,31 +221,67 @@
         color: white;
     }
 
-    #customers {
+    #decks {
         font-family: Arial, Helvetica, sans-serif;
         border-collapse: collapse;
         width: 100%;
     }
 
-    #customers td, #customers th {
+    #decks td, #decks th {
         border: 1px solid #ddd;
         padding: 8px;
     }
 
-    #customers tr:nth-child(even) {
+    #decks tr:nth-child(even) {
         background-color: #f2f2f2;
     }
 
-    #customers tr:hover {
+    #decks tr:hover {
         background-color: #ddd;
     }
 
-    #customers th {
+    #decks th {
         padding-top: 12px;
         padding-bottom: 12px;
         text-align: left;
         background-color: #4CAF50;
         color: white;
+    }
+
+    input[type=text] {
+        width: 100%;
+        padding: 10px 15px;
+        display: inline-block;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type=number] {
+        width: 100%;
+        padding: 10px 15px;
+        display: inline-block;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    select {
+        width: 100%;
+        padding: 10px 15px;
+        display: inline-block;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    select option {
+        width: 100%;
+        padding: 10px 15px;
+        display: inline-block;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type=submit]:hover {
+        background-color: #45a049;
     }
 </style>
 </html>

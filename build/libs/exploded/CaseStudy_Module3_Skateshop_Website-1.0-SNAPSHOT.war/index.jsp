@@ -1,10 +1,3 @@
-<%--
-Created by IntelliJ IDEA.
-User: xxtyo
-Date: 11/5/2020
-Time: 4:00 PM
-To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -28,7 +21,7 @@ To change this template use File | Settings | File Templates.
         <h1>WELCOME TO <span style="color: #32CD32">SKATESHOP</span></h1>
         <h5>Skateshop For <span style="color: #32CD32;"> Skateboarders!</span></h5>
     </div>
-    <div>
+    <div align="center">
         <form action="/home">
             <input class="button" type="submit" value="Let's Start!">
         </form>
@@ -44,9 +37,29 @@ To change this template use File | Settings | File Templates.
         font-family: Arial, Helvetica, sans-serif;
     }
 
+    .button {
+        background-color:#44c767;
+        border-radius:28px;
+        border:1px solid #18ab29;
+        display:inline-block;
+        cursor:pointer;
+        color:#ffffff;
+        font-family:Arial;
+        font-size:17px;
+        padding:16px 31px;
+        text-decoration:none;
+        text-shadow:0px 1px 0px #2f6627;
+    }
+    .button:hover {
+        background-color:#5cbf2a;
+    }
+    .button:active {
+        position:relative;
+        top:1px;
+    }
+
     .background {
-        background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(60, 205, 50, 0.1)),
-        url("images/background.jpg");
+        background-image: url("images/background.jpg");
         height: 100%;
         background-position: center;
         background-repeat: no-repeat;
@@ -76,16 +89,7 @@ To change this template use File | Settings | File Templates.
         margin-left: auto;
         margin-right: auto;
     }
-
-    .button {
-        width: 100px;
-        background-color: #4CAF50;
-        color: white;
-        padding: 14px 20px;
-        margin: 8px 0;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
 </style>
 </html>
+
+

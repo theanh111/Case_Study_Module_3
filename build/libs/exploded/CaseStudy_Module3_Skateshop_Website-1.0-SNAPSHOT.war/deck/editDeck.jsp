@@ -54,17 +54,29 @@
                 </tr>
                 <tr>
                     <th>Deck Size:</th>
-                    <td><input type="number" step="any" name="deckSize" id="deckSize" value="${deck.getDeckSize()}">
+                    <td>
+                        <select name="deckSize">
+                            <option value="7.5">7.5</option>
+                            <option value="7.75">7.75</option>
+                            <option value="8.0">8.0</option>
+                            <option value="8.25">8.25</option>
+                            <option value="8.5">8.5</option>
+                            <option value="8.75">8.75</option>
+                        </select>
                     </td>
                 </tr>
+
                 <tr>
-                    <th>Type Id:</th>
-                    <td><input type="text" name="typeId" id="typeId" value="${deck.getTypeId().typeId}">
+                    <th>Deck Type:</th>
+                    <td>
+                            <input type="text" name="typeId" id="typeId" value="${deck.getTypeId().typeName}">
                     </td>
                 </tr>
+
                 <tr>
-                    <th>Brand Id:</th>
-                    <td><input type="text" name="brandId" id="brandId" value="${deck.getBrandId().brandId}">
+                    <th>Deck Brand:</th>
+                    <td>
+                        <input type="text" name="brandId" id="brandId" value="${deck.getBrandId().brandName}">
                     </td>
                 </tr>
                 <tr>

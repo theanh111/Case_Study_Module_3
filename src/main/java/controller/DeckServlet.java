@@ -187,8 +187,8 @@ public class DeckServlet extends HttpServlet {
         String typeId = request.getParameter("typeId");
         String brandId = request.getParameter("brandId");
         Deck deck = deckService.selectDeck(deckId);
-        Type type = typeService.searchTypeById(typeId);
-        Brand brand = brandService.searchBrandById(brandId);
+        Type type = typeService.getTypeByName(typeId);
+        Brand brand = brandService.getBrandByName(brandId);
         deck.setDeckName(deckName);
         deck.setDeckPrice(deckPrice);
         deck.setDeckSize(deckSize);

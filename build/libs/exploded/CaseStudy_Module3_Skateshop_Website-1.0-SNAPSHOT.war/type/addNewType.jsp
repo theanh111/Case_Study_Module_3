@@ -33,7 +33,7 @@
     <p>
         <a href="/decks" class="btn btn-primary">Back To Deck List</a>
     </p>
-    <form method="post">
+    <form method="post" autocomplete="off">
         <fieldset>
             <legend>Type Information</legend>
             <table border="1" cellpadding="5">

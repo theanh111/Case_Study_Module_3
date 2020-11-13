@@ -1,5 +1,9 @@
 package service;
 
+import model.Customer;
+
 public interface ICustomerService {
-    void checkLogin();
+    Customer findCustomerByUsername(String username);
+
+    void registerNewCustomer(Customer customer);
 }

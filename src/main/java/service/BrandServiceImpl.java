@@ -1,16 +1,12 @@
 package service;
 
 import model.Brand;
-import model.Type;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BrandServiceImpl implements IBrandService {
-    private String jdbcURL = "jdbc:mysql://localhost:3306/skateshop?useSSL=false";
-    private String jdbcUsername = "root";
-    private String jdbcPassword = "TheanHtran111@";
 
     private static final String SELECT_ALL_BRAND_SQL = "{CALL selectAllBrandSQL()}";
     private static final String SELECT_BRAND_BY_ID = "{CALL searchBrandById(?)}";
@@ -19,25 +15,15 @@ public class BrandServiceImpl implements IBrandService {
     private static final String SEARCH_BRAND_BY_ID = "{CALL searchBrandById(?)}";
     private static final String SEARCH_BRAND_BY_NAME = "{CALL searchBrandByName(?)}";
     private static final String UPDATE_BRAND_BY_ID = "{CALL updateBrandById(?,?,?)}";
+    private static final String GET_BRAND_BY_NAME = "{CALL getBrandByName(?)}";
 
-    protected Connection getConnection() {
-        Connection connection = null;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return connection;
-    }
+    Connection connection = ConnectDB.getConnect();
 
     @Override
     public List<Brand> findAll() {
         List<Brand> brands = new ArrayList<>();
-        try (Connection connection = getConnection();
-             CallableStatement callableStatement = connection.prepareCall(SELECT_ALL_BRAND_SQL)) {
+        try {
+            CallableStatement callableStatement = connection.prepareCall(SELECT_ALL_BRAND_SQL);
             ResultSet rs = callableStatement.executeQuery();
             while (rs.next()) {
                 String brandId = rs.getString("brandId");
@@ -54,8 +40,8 @@ public class BrandServiceImpl implements IBrandService {
     @Override
     public Brand selectBrand(String brandId) {
         Brand brand = null;
-        try (Connection connection = getConnection();
-             CallableStatement callableStatement = connection.prepareCall(SELECT_BRAND_BY_ID)) {
+        try {
+            CallableStatement callableStatement = connection.prepareCall(SELECT_BRAND_BY_ID);
             callableStatement.setString(1, brandId);
             ResultSet rs = callableStatement.executeQuery();
             while (rs.next()) {
@@ -72,8 +58,8 @@ public class BrandServiceImpl implements IBrandService {
 
     @Override
     public void addNewBrand(Brand brand) {
-        try (Connection connection = getConnection();
-             CallableStatement callableStatement = connection.prepareCall(ADD_NEW_BRAND)) {
+        try {
+            CallableStatement callableStatement = connection.prepareCall(ADD_NEW_BRAND);
             callableStatement.setString(1, brand.getBrandId());
             callableStatement.setString(2, brand.getBrandName());
             callableStatement.setString(3, brand.getBrandAddress());
@@ -85,8 +71,8 @@ public class BrandServiceImpl implements IBrandService {
 
     @Override
     public void update(String brandId, Brand brand) {
-        try (Connection connection = getConnection();
-             CallableStatement callableStatement = connection.prepareCall(UPDATE_BRAND_BY_ID)) {
+        try {
+            CallableStatement callableStatement = connection.prepareCall(UPDATE_BRAND_BY_ID);
             callableStatement.setString(1, brand.getBrandId());
             callableStatement.setString(2, brand.getBrandName());
             callableStatement.setString(3, brand.getBrandAddress());
@@ -98,8 +84,8 @@ public class BrandServiceImpl implements IBrandService {
 
     @Override
     public void delete(String brandId) {
-        try (Connection connection = getConnection();
-             CallableStatement callableStatement = connection.prepareCall(DELETE_BRAND_BY_ID)) {
+        try {
+            CallableStatement callableStatement = connection.prepareCall(DELETE_BRAND_BY_ID);
             callableStatement.setString(1, brandId);
             callableStatement.executeUpdate();
         } catch (SQLException e) {
@@ -110,7 +96,6 @@ public class BrandServiceImpl implements IBrandService {
     @Override
     public Brand searchBrandById(String brandId) {
         Brand brand = null;
-        Connection connection = getConnection();
         try {
             CallableStatement callableStatement = connection.prepareCall(SEARCH_BRAND_BY_ID);
             callableStatement.setString(1, brandId);
@@ -129,7 +114,6 @@ public class BrandServiceImpl implements IBrandService {
     @Override
     public List<Brand> searchBrandByName(String brandName) {
         List<Brand> brandsByName = new ArrayList<>();
-        Connection connection = getConnection();
         try {
             CallableStatement callableStatement = connection.prepareCall(SEARCH_BRAND_BY_NAME);
             callableStatement.setString(1, brandName);
@@ -144,5 +128,23 @@ public class BrandServiceImpl implements IBrandService {
             throwables.printStackTrace();
         }
         return brandsByName;
+    }
+
+    @Override
+    public Brand getBrandByName(String brandName) {
+        Brand brand = null;
+        try {
+            CallableStatement callableStatement = connection.prepareCall(GET_BRAND_BY_NAME);
+            callableStatement.setString(1, brandName);
+            ResultSet rs = callableStatement.executeQuery();
+            while (rs.next()) {
+                String brandId = rs.getString("brandId");
+                String brandAddress = rs.getString("brandAddress");
+                brand = new Brand(brandId, brandName, brandAddress);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return brand;
     }
 }

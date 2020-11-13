@@ -19,4 +19,6 @@ public interface ITypeService {
     void update(String typeId, Type type);
 
     void delete(String typeId);
+
+    Type getTypeByName(String typeName);
 }
